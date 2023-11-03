@@ -1,0 +1,12 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+	v2.0 | 20110126
+	License: none (public domain)
+*/
+
+:root{
+	--black: #000;
+	--black-hover: rgb(71, 69, 69);
+	--white:  #fff;
+	--header: rgb(30, 30, 30);
+	--color-bg: whitesmoke;
+}
