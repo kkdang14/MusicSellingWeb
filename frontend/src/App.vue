@@ -1,14 +1,11 @@
 <template>
   <div class="page">
-    <Header></Header>
     
-    <div class="container">
-      <router-view/>
-    </div>
+    <Header v-if="showHeader"></Header>
+    
+    <router-view class="router-view"></router-view>
 
-    <div class="footer">
-      <Footer></Footer>
-    </div>
+    <Footer v-if="showFooter"></Footer>
   </div>
 </template>
 
@@ -19,14 +16,28 @@ import Header from './components/Header.vue'
 export default {
   components: {
     Header,
-    Footer
+    Footer,
+  },
+  computed: {
+    showHeader() {
+      return (this.$route.name !== 'login' && this.$route.name !== 'register' && this.$route.name !== 'admin'
+        && this.$route.name !== 'product-management');
+    },
+    showFooter() {
+      return (this.$route.name !== 'login' && this.$route.name !== 'register' && this.$route.name !== 'admin'
+        && this.$route.name !== 'product-management');
+    },
   },
 };
 </script>
 
-<style scoped>
+<style >
     .page{
       height: auto;
       width: 100%;
+    }
+    
+    .router-view {
+      width: 100%; 
     }
 </style>

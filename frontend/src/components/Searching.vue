@@ -5,11 +5,13 @@
                 class="input" 
                 type="text" 
                 placeholder="Searching" 
+                @keydown.enter="handleSearch"
                 v-model="searchTerm" 
                 @input="search">
             <button 
                 class="btn" 
                 type="submit"
+                @click="handleSearch"
             >
                 Search
             </button>
@@ -25,8 +27,8 @@ export default {
         };
     },
     methods: {
-        search() {
-            // Handle search functionality here based on this.searchTerm
+        handleSearch() {
+            this.$emit('search', this.searchTerm);
         },
     },
 };

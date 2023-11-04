@@ -1,0 +1,28 @@
+body {
+    overflow-x: hidden;
+}
+
+/* Chắc chắn rằng các phần tử con không làm tràn ra ngoài */
+.container {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Chắc chắn rằng hình ảnh và video không làm tràn ra ngoài */
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Chắc chắn rằng các bảng không làm tràn ra ngoài */
+table {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Loại bỏ padding và margin mặc định trên toàn trang */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

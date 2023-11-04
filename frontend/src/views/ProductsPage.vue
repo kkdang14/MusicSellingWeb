@@ -1,9 +1,10 @@
 <template>
     <div class="product">
-        <Searching />
+        <Searching @search="performSearch"/>
         <p v-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p>
+        <p v-if="filteredProducts.length === 0">Không tìm thấy sản phẩm phù hợp</p>
         <div class="product-area">
-            <product-list :products="products"/>
+            <product-list :products="filteredProducts"/>
         </div>
     </div>
 </template>

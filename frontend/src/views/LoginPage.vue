@@ -45,15 +45,16 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
 }
 
 .container {
     width: 80%;
-    max-width: 400px;
+    max-width: 500px;
+    height: 400px;
     text-align: center;
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: #f5f5f5;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -88,7 +89,8 @@ export default {
 .btn {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #007bff;
+    width: 30%;
+    background-color: var(--black);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -96,7 +98,8 @@ export default {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: var(--black-hover);
+    color: var(--white);
 }
 
 .register {

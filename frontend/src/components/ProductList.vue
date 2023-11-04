@@ -42,12 +42,18 @@
 <script>
 export default {
     props: {
-        products: Array, // Prop to receive the list of products from the parent component
+        products: Array, 
     },
 };
 </script>
 
 <style scoped>
+.product-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 .category {
     margin-top: 20px;
     background-color: var(--color-bg);
@@ -57,15 +63,18 @@ export default {
     line-height: 50px;
     font-weight: 500;
     font-size: 25px;
+    width: 80%;
 }
 
 .product-list__category {
     display: flex;
+    justify-items: center;
+    align-items: center;
     background-color: var(--color-bg);
     border-radius: 10px;
-    margin: 20px 5px;
+    margin: 20px 95px;
     padding: 10px;
-    width: calc(100% - 10px);
+    width: 80%
 }
 
 .container {
@@ -82,7 +91,6 @@ export default {
     height: 275px;
     width: 225px;
     border-radius: 10px;
-    box-sizing: border-box;
     text-align: center;
     display: flex;
     flex-direction: column;

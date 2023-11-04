@@ -7,12 +7,12 @@
                 <router-link to="/shopping" class="nav-bar__item">Shopping</router-link>
             </div>
             <div class="other">
-                <div class="favorite">
+                <router-link to="/favorite" class="favorite">
                     <i class="fa-solid fa-heart"></i>
-                </div>
-                <div class="cart">
+                </router-link>
+                <router-link to="/cart" class="cart">
                     <i class="fa-solid fa-cart-shopping"></i>
-                </div>
+                </router-link>
                 <router-link to="/login" class="login">Login</router-link>
             </div>
         </nav>
@@ -30,7 +30,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-content: center;
-    height: 60px;
+    width: 100%;
+    height: 70px;
     background-color: rgb(30, 30, 30);
 }
 

@@ -1,3 +1,3 @@
 <template>
-    <h1>This is favorite</h1>
+    <h1>Day la trang album hoac ep yeu thich</h1>
 </template>
