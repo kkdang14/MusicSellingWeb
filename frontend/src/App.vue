@@ -20,12 +20,14 @@ export default {
   },
   computed: {
     showHeader() {
-      return (this.$route.name !== 'login' && this.$route.name !== 'register' && this.$route.name !== 'admin'
-        && this.$route.name !== 'product-management');
+      const excludedRoutes = ['login', 'register', 'admin', 'product-management',
+                              'user-management', 'overall', 'order', 'dashboard'];
+      return !excludedRoutes.includes(this.$route.name);
     },
     showFooter() {
-      return (this.$route.name !== 'login' && this.$route.name !== 'register' && this.$route.name !== 'admin'
-        && this.$route.name !== 'product-management');
+      const excludedRoutes = ['login', 'register', 'admin', 'product-management',
+                              'user-management', 'overall', 'order', 'dashboard'];
+      return !excludedRoutes.includes(this.$route.name);
     },
   },
 };

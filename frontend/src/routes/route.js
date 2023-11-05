@@ -1,70 +1,96 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import ProductsPage from '../views/ProductsPage.vue';
-import HomePage from '../views/HomePage.vue';
-import Admin from '../views/Admin.vue';
-import LoginPage from '../views/LoginPage.vue';
-import RegisterPage from '../views/RegisterPage.vue';
-import ProductDetail from '../views/ProductDetail.vue';
-import FavoritePage from '../views/FavoritePage.vue';
-import CartPage from '../views/CartPage.vue';
+
 
 const routes = [
     {
         path: "/",
         name: "home",
-        component: HomePage,
+        component: () => import('@/views/HomePage.vue'),
+        meta: { title: 'Home' }
     },
 
     {
         path: "/shopping",
         name: "product",
-        component: ProductsPage,
+        component: () => import('../views/ProductsPage.vue'),
+        meta: { title: 'Shopping' }
     },
 
     {
         path: "/shopping/:id",
         name: "product-detail",
-        component: ProductDetail
+        component: () => import('../views/ProductDetail.vue'),
     },
 
     {
         path: "/admin",
         name: "admin",
-        component: Admin,
+        component: () => import('../views/Admin.vue'),
+        meta: { title: 'Admin' },
         children: [
             {
-                path: "product-management",
-                name: "product-management",
-                component: () => import("../components/ProductManagement.vue")
-            }
+                path: "dashboard",
+                name: "dashboard",
+                component: () => import("@/components/DashBoard.vue"),
+                children: [
+                    {
+                        path: "product-management",
+                        name: "product-management",
+                        component: () => import("@/components/ProductManagement.vue")
+                    },
+        
+                    {
+                        path: "user-management",
+                        name: "user-management",
+                        component: () => import("@/components/UserManagement.vue")
+                    },
+        
+                    {
+                        path: "overall",
+                        name: "overall",
+                        component: () => import("@/components/OverallPage.vue")
+                    },
+        
+                    {
+                        path: "order",
+                        name: "order",
+                        component: () => import("@/components/OrderPage.vue")
+                    },
+                ]
+            },
         ]
     },
 
     {
         path: "/login",
         name: "login",
-        component: LoginPage,
+        component: () => import('../views/LoginPage.vue'),
+        meta: { title: 'Login' }
     },
 
     {
         path: "/register",
         name: "register",
-        component: RegisterPage,
+        component: () => import('../views/RegisterPage.vue'),
+        meta: { title: 'Register' }
     },
 
     {
         path: "/cart",
         name: "cart",
-        component: CartPage,
+        component: () => import('../views/CartPage.vue'),
+        meta: { title: 'Cart' }
     },
 
     {
         path: "/favorite",
         name: "favorite",
-        component: FavoritePage,
+        component: () => import('../views/FavoritePage.vue'),
+        meta: { title: 'Favorite' }
     }
 
 ];
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

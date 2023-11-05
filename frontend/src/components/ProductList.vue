@@ -74,7 +74,7 @@ export default {
     border-radius: 10px;
     margin: 20px 95px;
     padding: 10px;
-    width: 80%
+    width: calc(80% - 70px);
 }
 
 .container {

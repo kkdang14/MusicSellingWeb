@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <div class="container">
-            <h1>This is Product Management Page</h1>
+            <h1>This is User Management Page</h1>
         </div>
     </div>
 </template>

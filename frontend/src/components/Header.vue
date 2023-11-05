@@ -2,11 +2,14 @@
     <div class="page">
         <nav class="nav">
             <div class="nav-bar">
-                <div class="logo">432Hz</div>
+                <router-link to="/" class="logo">432Hz</router-link>
                 <router-link to="/" class="nav-bar__item">Home</router-link>
                 <router-link to="/shopping" class="nav-bar__item">Shopping</router-link>
             </div>
             <div class="other">
+                <router-link to="/admin" class="admin">
+                    <i class="fa-solid fa-user-gear"></i>
+                </router-link>
                 <router-link to="/favorite" class="favorite">
                     <i class="fa-solid fa-heart"></i>
                 </router-link>
@@ -46,12 +49,19 @@ export default {
     margin: 5px;
     font-size: 25px;
     color: #fff;
+    text-decoration: none;
 }
 
 .nav-bar__item {
     margin: 10px;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 600;
     color: #fff;
+    text-decoration: none;
+}
+
+.nav-bar__item:hover{
+    color: var(--black-hover);
 }
 
 
@@ -62,9 +72,19 @@ export default {
 
 .favorite,
 .cart,
+.admin,
 .login {
     margin: 10px;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 600;
     color: #fff;
+    text-decoration: none;
+}
+
+.favorite:hover,
+.cart:hover,
+.admin:hover,
+.login:hover {
+    color: var(--black-hover)
 }
 </style>

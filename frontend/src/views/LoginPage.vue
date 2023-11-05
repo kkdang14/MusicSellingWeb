@@ -17,7 +17,7 @@
                     You don't have account?
                     <router-link to="/register">Register</router-link>
                 </div>
-        </form>
+            </form>
         </div>
     </div>
 </template>

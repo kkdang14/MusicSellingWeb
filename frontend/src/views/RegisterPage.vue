@@ -101,61 +101,62 @@ export default {
 
     methods: {
         async register() {
-            this.submitted = true;
+            // this.submitted = true;
 
-            if (this.usernameError || this.emailError || this.passwordError) {
-                return;
-            }
+            // if (this.usernameError || this.emailError || this.passwordError) {
+            //     return;
+            // }
 
-            if (this.formData.password !== this.formData.confirmPassword) {
-                this.confirmPasswordError = "Passwords do not match";
-                return;
-            }
+            // if (this.formData.password !== this.formData.confirmPassword) {
+            //     this.confirmPasswordError = "Passwords do not match";
+            //     return;
+            // }
             try {
                 const response = await UserService.createUser(this.formData);
                 console.log(response.data);
                 alert("Registration successful");
                 this.$router.push({ name: "login" });
             } catch (error) {
+                alert("Registration failed: username or email is exist")
                 console.error("Registration failed:", error);
             }
         },
 
-        validateUsername() {
-            if (this.formData.username.length < 3) {
-                this.usernameError = "Username must be at least 3 characters long";
-            } else {
-                this.usernameError = "";
-            }
-        },
-        validateEmail() {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(this.formData.email)) {
-                this.emailError = "Invalid email format";
-            } else {
-                this.emailError = "";
-            }
-        },
+        // validateUsername() {
+        //     if (this.formData.username.length < 3) {
+        //         this.usernameError = "Username must be at least 3 characters long";
+        //     } else {
+        //         this.usernameError = "";
+        //     }
+        // },
+        // validateEmail() {
+        //     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //     if (!emailPattern.test(this.formData.email)) {
+        //         this.emailError = "Invalid email format";
+        //     } else {
+        //         this.emailError = "";
+        //     }
+        // },
 
-        validatePassword() {
-            if (this.formData.password.length < 8) {
-                this.passwordError = "Password must be at least 8 characters long";
-            } else {
-                this.passwordError = "";
-            }
-        },
+        // validatePassword() {
+        //     if (this.formData.password.length < 8) {
+        //         this.passwordError = "Password must be at least 8 characters long";
+        //     } else {
+        //         this.passwordError = "";
+        //     }
+        // },
 
-        validateConfirmPassword() {
-            if (this.formData.password !== this.formData.confirmPassword) {
-                this.confirmPasswordError = "Passwords do not match";
-            } else {
-                this.confirmPasswordError = "";
-            }
-        },
+        // validateConfirmPassword() {
+        //     if (this.formData.password !== this.formData.confirmPassword) {
+        //         this.confirmPasswordError = "Passwords do not match";
+        //     } else {
+        //         this.confirmPasswordError = "";
+        //     }
+        // },
 
-        togglePasswordVisibility() {
-            this.showPassword = !this.showPassword;
-        },
+        // togglePasswordVisibility() {
+        //     this.showPassword = !this.showPassword;
+        // },
     },
 };
 </script>
