@@ -67,6 +67,11 @@
                     </div>
                     
                     <button type="submit" class="btn">Register</button>
+
+                    <div class="login">
+                        Bạn đã có tài khoản?
+                        <router-link to="/login">Login now!</router-link>
+                    </div>
                 </form>
             </div>
         </div>
@@ -246,6 +251,20 @@ export default {
     display: inline-block;
     font-size: 18px;
     margin-left: -30px;
+}
+
+.login {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.login a:hover {
+    text-decoration: underline;
 }
 
 </style>

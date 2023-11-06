@@ -2,7 +2,7 @@
     <div class="product">
         <Searching @search="performSearch"/>
         <p v-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p>
-        <p v-if="filteredProducts.length === 0">Không tìm thấy sản phẩm phù hợp</p>
+        <p v-else-if="filteredProducts.length === 0">Không tìm thấy sản phẩm phù hợp</p>
         <div class="product-area">
             <product-list :products="filteredProducts"/>
         </div>
@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         performSearch(searchText) {
-            this.searchText = searchText;
+            this.searchText = searchText.toLowerCase();
         },
 
         async retrieveProduct(){
@@ -40,7 +40,8 @@ export default {
     },
     computed: {
         filteredProducts() {
-            return this.products.filter(product => product.name.includes(this.searchText));
+            const searchLower = this.searchText; // Convert search input to lowercase
+            return this.products.filter(product => product.name.toLowerCase().includes(searchLower));
         },
     },
 };

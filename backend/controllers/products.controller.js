@@ -1,10 +1,21 @@
 const Products = require("../models/products.model");
 
-const createProduct = async (req, res) =>{
+const createProduct = async (req, res) => {
+    let uploadedFilename;
+
+    if (req.file) {
+        uploadedFilename = req.file.path; 
+    }
+
     try {
-        const product = await Products.create(req.body);
+        const productData = {
+            ...req.body,
+            image: uploadedFilename, // Assuming you have an 'imageUrl' field in your product model
+        };
+        const product = await Products.create(productData);
         res.status(200).json(product);
-    } catch{
+    } catch (error) {
+        console.log(error)
         res.status(500).json({massage: "Error!"});
     } 
 }
@@ -54,10 +65,21 @@ const deleteOne = async (req, res) =>{
     }
 }
 
+const deleteAll = async (req, res) => {
+    try {
+        const result = await Products.deleteMany({});
+        res.status(200).json({message:`Deleted ${result.deletedCount} products.`});
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({massage: "Error!"});
+    }
+}
+
 module.exports = {
     createProduct,
     getAll,
     getOne,
     updateOne,
-    deleteOne
+    deleteOne,
+    deleteAll
 }

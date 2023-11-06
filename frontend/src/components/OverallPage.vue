@@ -1,7 +1,8 @@
 <template>
     <div class="page">
         <div class="container">
-            <h1>This is Overall Page</h1>
+            <h1>Analytics Page</h1>
+            <p>Comming soon</p>
         </div>
     </div>
 </template>
@@ -16,6 +17,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         height: 100%;
         width: 100%;
     }

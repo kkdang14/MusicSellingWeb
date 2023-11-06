@@ -23,40 +23,47 @@ const routes = [
     },
 
     {
+        path: "/:pathMatch(.*)*",
+        name: "notfound",
+        component: () => import('../views/NotFound.vue'),
+        meta: { title: '404' }
+    },
+
+    {
         path: "/admin",
         name: "admin",
-        component: () => import('../views/Admin.vue'),
+        component: () => import('@/views/Admin.vue'),
         meta: { title: 'Admin' },
         children: [
             {
-                path: "dashboard",
-                name: "dashboard",
-                component: () => import("@/components/DashBoard.vue"),
+                path: "product-management",
+                name: "product-management",
+                component: () => import("@/components/ProductManagement.vue"),
                 children: [
                     {
-                        path: "product-management",
-                        name: "product-management",
-                        component: () => import("@/components/ProductManagement.vue")
-                    },
-        
-                    {
-                        path: "user-management",
-                        name: "user-management",
-                        component: () => import("@/components/UserManagement.vue")
-                    },
-        
-                    {
-                        path: "overall",
-                        name: "overall",
-                        component: () => import("@/components/OverallPage.vue")
-                    },
-        
-                    {
-                        path: "order",
-                        name: "order",
-                        component: () => import("@/components/OrderPage.vue")
+                        path: "add-product",
+                        name: "add-product",
+                        component: () => import("@/components/ProductAdd.vue"),
                     },
                 ]
+            },
+
+            {
+                path: "user-management",
+                name: "user-management",
+                component: () => import("@/components/UserManagement.vue")
+            },
+
+            {
+                path: "overall",
+                name: "overall",
+                component: () => import("@/components/OverallPage.vue")
+            },
+
+            {
+                path: "order",
+                name: "order",
+                component: () => import("@/components/OrderPage.vue")
             },
         ]
     },

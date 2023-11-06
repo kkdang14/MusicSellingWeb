@@ -1,10 +1,46 @@
 <template>
     <div class="page">
-        <div class="container">
-            <h1>This is Product Management Page</h1>
+        <div class="productlist-area">
+            <product-list-admin :products="products"></product-list-admin>
         </div>
     </div>
 </template>
+
+<script>
+import ProductService from '../services/products.service';
+import ProductListAdmin from '../components/ProductList.admin.vue';
+export default {
+    components: { ProductListAdmin },
+
+    data() {
+        return{
+            products: [],
+        }
+    },
+
+    methods: {
+        async retrieveProduct(){
+            try {
+                this.products = await ProductService.getAllProducts();
+                console.log('Products retrieved:', this.products);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        // show() {
+        //     console.log(this.products)
+        // }
+    },
+
+    // computed: {
+    //     filteredProducts() {
+    //         return this.products;
+    //     },
+    // },
+}
+</script>
+
 
 <style scoped>
     .page{

@@ -1,100 +1,68 @@
 <template>
     <div class="admin-page">
-        <div class="container">
-            <div class="login">Login Admin</div>
-            <form @submit.prevent="loginAdmin" class="form">
-                <div class="form-item">
-                    <label for="username" class="label">Username</label><br>
-                    <input v-model="formData.username" type="text" id="username" placeholder="Username" class="input" />
-                </div>
-                <div class="form-item">
-                    <label for="password" class="label">Password</label><br>
-                    <input v-model="formData.password" type="password" id="password" placeholder="Password" class="input" />
-                </div>
-                <button type="submit" class="btn">Login</button>
-            </form>
+        <div class="vertical-menu">
+            <router-link to="/admin/user-management" class="menu-item">
+                <i class="fa-solid fa-user"></i><br>
+                User
+            </router-link>
+            <router-link to="/admin/product-management" class="menu-item">
+                <i class="fa-solid fa-box"></i><br>
+                Product
+            </router-link>
+            <router-link to="/admin/overall" class="menu-item">
+                <i class="fa-solid fa-chart-line"></i><br>
+                Analytics
+            </router-link>
+            <router-link to="/admin/order" class="menu-item">
+                <i class="fa-solid fa-dolly"></i><br>
+                Order
+            </router-link>
+            <router-link to="/" class="menu-item">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </router-link>
         </div>
-        <!-- <router-view></router-view> -->
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import UsersService from '../services/users.service';
 export default {
-    data() {
-        return {
-            formData: {
-                username: '',
-                password: '',
-            },
-        };
-    },
-
-    methods: {
-        
-    },
+    
 }
 </script>
 
 <style scoped>
-.admin-page {
+.admin-page{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    width: 80%;
-    max-width: 500px;
-    height: 400px;
-    text-align: center;
-    padding: 20px;
-    margin-top: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.login {
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-
-.form {
-    margin-top: 20px;
-}
-
-.form-item {
-    margin: 10px 0;
-    text-align: left;
-}
-
-.label {
-    font-weight: bold;
-}
-
-.input {
     width: 100%;
+    height: auto;
+}
+.vertical-menu {
+    background-color: #333;
+    width: 100px;
+    height: 100vh;
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    width: 30%;
-    background-color: var(--black);
+.menu-item {
+    display: block;
     color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 80px;
+    margin-top: 30px;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+    transition: background-color 0.3s;
 }
 
-.btn:hover {
-    background-color: var(--black-hover);
-    color: var(--white);
+.menu-item i{
+    font-size: 25px;
+}
+
+.menu-item:hover {
+    background-color: #444;
 }
 </style>

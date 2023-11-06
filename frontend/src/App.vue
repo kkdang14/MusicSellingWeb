@@ -21,12 +21,12 @@ export default {
   computed: {
     showHeader() {
       const excludedRoutes = ['login', 'register', 'admin', 'product-management',
-                              'user-management', 'overall', 'order', 'dashboard'];
+                              'user-management', 'overall', 'order', 'notfound'];
       return !excludedRoutes.includes(this.$route.name);
     },
     showFooter() {
       const excludedRoutes = ['login', 'register', 'admin', 'product-management',
-                              'user-management', 'overall', 'order', 'dashboard'];
+                              'user-management', 'overall', 'order', 'notfound'];
       return !excludedRoutes.includes(this.$route.name);
     },
   },
