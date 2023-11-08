@@ -7,7 +7,7 @@ class ProductService {
 
     async createProduct(productData) {
         try {
-            const response = await this.apiClient.post('/', productData);
+            const response = await this.apiClient.post('/', productData)
             return response.data;
         } catch (error) {
             throw error;
@@ -45,6 +45,15 @@ class ProductService {
         try {
             const response = await this.apiClient.delete(`/${productId}`);
             return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteAll() {
+        try {
+            const response = await this.apiClient.delete('/');
+            return response.data
         } catch (error) {
             throw error;
         }

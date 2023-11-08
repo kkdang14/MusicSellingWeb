@@ -14,8 +14,12 @@ export default {
 
     data() {
         return{
-            products: [],
+            products: []
         }
+    },
+
+    created() {
+        this.retrieveProduct(); // Load products when the component is created
     },
 
     methods: {
@@ -24,13 +28,9 @@ export default {
                 this.products = await ProductService.getAllProducts();
                 console.log('Products retrieved:', this.products);
             } catch (error) {
-                console.log(error);
+                console.error('Error retrieving products:', error);
             }
         },
-
-        // show() {
-        //     console.log(this.products)
-        // }
     },
 
     // computed: {
@@ -48,10 +48,10 @@ export default {
         height: auto;
     }
 
-    .container{
+    .productlist-area{
         display: flex;
         justify-content: center;
-        align-items: center;
+        /* align-items: center; */
         height: 100%;
         width: 100%;
     }

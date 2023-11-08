@@ -9,7 +9,7 @@
                             <img :src="product.image" alt="Product Image" />
                         </div>
                         <div class="details">
-                            <div class="name">{{ product.name }}</div>
+                            <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
                             <button class="buy-now">Buy now</button>
@@ -27,7 +27,7 @@
                             <img :src="product.image" alt="Product Image" />
                         </div>
                         <div class="details">
-                            <div class="name">{{ product.name }}</div>
+                            <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
                             <button class="buy-now">Buy now</button>
@@ -74,7 +74,7 @@ export default {
     border-radius: 10px;
     margin: 20px 95px;
     padding: 10px;
-    width: calc(80% - 70px);
+    width: calc(85% - 45px)
 }
 
 .container {
@@ -88,8 +88,8 @@ export default {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 20px;
-    height: 275px;
-    width: 225px;
+    height: 350px;
+    width: 250px;
     border-radius: 10px;
     text-align: center;
     display: flex;
@@ -115,16 +115,22 @@ export default {
 }
 
 .details {
-    margin-top: auto;
+    margin-top: 10px;
 }
 
 .name {
     font-weight: bold;
     font-size: 1.2rem;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    overflow: hidden;
+    white-space: normal; /* This allows text to wrap to the next line */
+    text-overflow: clip;
 }
 
 .price {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .add-to-cart,

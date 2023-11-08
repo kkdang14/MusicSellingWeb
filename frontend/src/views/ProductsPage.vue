@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         performSearch(searchText) {
-            this.searchText = searchText.toLowerCase();
+            this.searchText = searchText;
         },
 
         async retrieveProduct(){
@@ -36,12 +36,17 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        }   
+        },
+
+        normalizeText(text) {
+        // Normalize text using the 'unorm' library
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    },
     },
     computed: {
         filteredProducts() {
-            const searchLower = this.searchText; // Convert search input to lowercase
-            return this.products.filter(product => product.name.toLowerCase().includes(searchLower));
+            const searchLower = this.normalizeText(this.searchText).toLowerCase(); // Convert search input to lowercase
+            return this.products.filter(product => product.title.includes(searchLower));
         },
     },
 };

@@ -38,14 +38,19 @@ const routes = [
             {
                 path: "product-management",
                 name: "product-management",
-                component: () => import("@/components/ProductManagement.vue"),
-                children: [
-                    {
-                        path: "add-product",
-                        name: "add-product",
-                        component: () => import("@/components/ProductAdd.vue"),
-                    },
-                ]
+                component: () => import("@/components/ProductManagement.vue"),    
+            },
+
+            {
+                path: "add-product",
+                name: "add-product",
+                component: () => import("@/components/ProductAdd.vue"),
+            },
+
+            {
+                path: "product-form",
+                name: "product-form",
+                component: () => import("../components/ProductForm.vue"),
             },
 
             {
