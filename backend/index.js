@@ -4,17 +4,21 @@ const app = express();
 const mongoose = require("mongoose");
 const productRoute = require("./routes/products.route")
 const userRoute = require("./routes/users.route")
+const errorMiddleware = require("./middlewares/error")
 require("dotenv").config();
 
 const DB_URL = process.env.DB_URL;
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json());    
 
+
+app.use(errorMiddleware);
 //routes
 app.use('/api/products', productRoute);
 app.use('/api/users', userRoute);
+
 
 // DB connection
 mongoose.set("strictQuery", false);

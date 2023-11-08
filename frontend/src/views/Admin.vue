@@ -3,11 +3,11 @@
         <div class="vertical-menu">
             <router-link to="/admin/user-management" class="menu-item">
                 <i class="fa-solid fa-user"></i><br>
-                User
+                Users
             </router-link>
             <router-link to="/admin/product-management" class="menu-item">
                 <i class="fa-solid fa-box"></i><br>
-                Product
+                Products
             </router-link>
             <router-link to="/admin/overall" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i><br>
