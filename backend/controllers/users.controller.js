@@ -13,16 +13,16 @@ const createUser = asyncHandler(async (req, res) => {
     }
 })
 
-const getAll = async (req, res) => {
+const getAll = asyncHandler(async (req, res) => {
     try {
         const user = await Users.find({});
         res.status(200).json(user);
     } catch {
         res.status(500).json({ massage: "Error!" });
     }
-}
+})
 
-const getOne = async (req, res) => {
+const getOne = asyncHandler(async (req, res) => {
     try {
         const user = await Users.findById(req.params.id)
         if (!user) {
@@ -32,9 +32,9 @@ const getOne = async (req, res) => {
     } catch {
         res.status(500).json({ massage: "Error!" });
     }
-}
+})
 
-const updateOne = async (req, res) => {
+const updateOne = asyncHandler(async (req, res) => {
     try {
         const user = await Users.findByIdAndUpdate(req.params.id, req.body)
         if (!user) {
@@ -44,9 +44,9 @@ const updateOne = async (req, res) => {
     } catch {
         res.status(500).json({ massage: "Error!" });
     }
-}
+})
 
-const deleteOne = async (req, res) => {
+const deleteOne = asyncHandler(async (req, res) => {
     try {
         const user = await Users.findByIdAndDelete(req.params.id, req.body)
         if (!user) {
@@ -56,12 +56,23 @@ const deleteOne = async (req, res) => {
     } catch {
         res.status(500).json({ massage: "Error!" });
     }
-}
+})
+
+const deleteAll = asyncHandler(async (req, res) => {
+    try {
+        const result = await Users.deleteMany({});
+        res.status(200).json({message:`Deleted ${result.deletedCount} products.`});
+    } catch (error) {
+        res.status(500);
+        throw new Error(error.message)
+    }
+})
 
 module.exports = {
     createUser,
     getAll,
     getOne,
     updateOne,
-    deleteOne
+    deleteOne,
+    deleteAll
 }

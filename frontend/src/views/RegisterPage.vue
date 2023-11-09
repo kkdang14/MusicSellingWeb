@@ -3,10 +3,32 @@
     <div class="register-page">
         <div class="container">
             <div class="register">Register</div>
-            <div class="form">
-                <form @submit.prevent="register">
+            <div >
+                <form @submit.prevent="register" class="form">
                     <div class="form-item">
-                        <label class="label" for="username">Name</label><br />
+                        <label class="label" for="firstname">Firstname</label><br />
+                        <input 
+                            class="input" 
+                            type="text" 
+                            id="firstname" 
+                            placeholder="Firstname" 
+                            v-model="formData.firstname"
+                            />
+                    </div>
+
+                    <div class="form-item">
+                        <label class="label" for="lastname">Last name</label><br />
+                        <input 
+                            class="input" 
+                            type="text" 
+                            id="lastname" 
+                            placeholder="Lastname" 
+                            v-model="formData.lastname"
+                            />
+                    </div>
+
+                    <div class="form-item">
+                        <label class="label" for="username">Username</label><br />
                         <input 
                             class="input" 
                             :class="{ 'input-error': submitted && usernameError, 'input-success': submitted && !usernameError }" 
@@ -65,13 +87,35 @@
                         />
                         <span class="error-message" v-if="submitted && confirmPasswordError">{{ confirmPasswordError }}</span>
                     </div>
-                    
-                    <button type="submit" class="btn">Register</button>
+
+                    <div class="form-item">
+                        <label class="label" for="address">Address</label><br />
+                        <input 
+                            class="input" 
+                            type="text" 
+                            id="address" 
+                            placeholder="Address" 
+                            v-model="formData.address"
+                            />
+                    </div>
+
+                    <div class="form-item">
+                        <label class="label" for="phone">Phone number</label><br />
+                        <input 
+                            class="input" 
+                            type="text" 
+                            id="phone" 
+                            placeholder="Phone number" 
+                            v-model="formData.phone"
+                            />
+                    </div>
 
                     <div class="login">
                         Bạn đã có tài khoản?
                         <router-link to="/login">Login now!</router-link>
                     </div>
+
+                    <button type="submit" class="btn">Register</button>
                 </form>
             </div>
         </div>
@@ -86,10 +130,15 @@ export default {
     data() {
         return {
             formData: {
+                firstname: "",
+                lastname: "",
                 username: "",
                 email: "",
                 password: "",
-                password2: ""
+                password2: "",
+                address: "",
+                phone: "",
+
             },
             usernameError: "",
             emailError: "",
@@ -163,9 +212,9 @@ export default {
         //     }
         // },
 
-        // togglePasswordVisibility() {
-        //     this.showPassword = !this.showPassword;
-        // },
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
     },
 };
 </script>
@@ -180,7 +229,7 @@ export default {
 
 .container {
     width: 80%;
-    width: 500px;
+    width: 800px;
     height: 600px;
     text-align: center;
     padding: 20px;
@@ -198,16 +247,23 @@ export default {
 
 .form {
     margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+    justify-content: space-between; 
 }
 
 .form-item {
-    margin: 10px 0;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 48%; /* Set width to 48% to fit two items in one row with a small gap */
+    margin-bottom: 10px; /* Add some space between form items */
     text-align: left;
-    padding: 10px
 }
 
 .label {
     font-weight: bold;
+    font-size: 18px;
 }
 
 .input {
@@ -217,10 +273,18 @@ export default {
     border-radius: 5px;
 }
 
+/* .input {
+    width: 100%;
+    box-sizing: border-box;
+} */
+
 .btn {
-    margin-top: 20px;
+    /* margin-top: 20px; 
+    margin-left: auto; 
+    margin-right: 30; */
+    margin: 20px 60px auto auto;
     padding: 10px 20px;
-    width: 30%;
+    width: 30%; /* Adjust the width as needed */
     background-color: var(--black);
     color: #fff;
     border: none;

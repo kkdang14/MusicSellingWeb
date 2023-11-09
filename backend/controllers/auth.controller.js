@@ -10,7 +10,6 @@ const generateAuthToken = (user) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
-
     try {
         // Check if the user with the provided username exists
         const user = await Users.findOne({ username });

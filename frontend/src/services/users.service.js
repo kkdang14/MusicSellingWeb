@@ -11,21 +11,6 @@ class UserService {
     //     });
     // }
 
-    // async login(userData) {
-    //     try {
-    //         const response = await this.apiClient.post('/', userData)
-    //         const { token, user } = response.data;
-
-    //         // Store token and user data in local storage
-    //         localStorage.setItem('token', token);
-    //         localStorage.setItem('user', JSON.stringify(user));
-
-    //         return user;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // }
-
     async createUser(userData) {
         try {
             const response = await this.apiClient.post('/', userData);

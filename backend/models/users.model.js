@@ -3,6 +3,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
+    firstname: {
+        type: String,
+        required: true,
+    },
+
+    lastname: {
+        type: String,
+        required: true,
+    },
+
     username: {
         type: String,
         required: true,
@@ -19,6 +29,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
+    address: {
+        type: String,
+    },
+
+    phone: {
+        type: String,
+        required: true,
+    },
+    
     
     isAdmin: {
         type: Boolean,

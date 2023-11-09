@@ -8,6 +8,7 @@ router.get('/', users.getAll)
 router.get('/:id', users.getOne)
 router.put('/:id', users.updateOne)
 router.delete('/:id', users.deleteOne)
+router.delete('/', users.deleteAll)
 
 router.post('/login', auth.login)
 

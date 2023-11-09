@@ -1,7 +1,7 @@
 const express =  require("express");
 const cors = require("cors");
 const app = express();
-const mongoose = require("mongoose");
+const dbConnection = require("./utils/db")
 const productRoute = require("./routes/products.route")
 const userRoute = require("./routes/users.route")
 const errorMiddleware = require("./middlewares/error")
@@ -18,16 +18,8 @@ app.use('/api/users', userRoute);
 
 app.use(errorMiddleware);
 
+dbConnection.connect();
 
-// DB connection
-mongoose.set("strictQuery", false);
-
-mongoose.connect(DB_URL)
-.then(() => {
-    console.log("Connected");
-    app.listen(PORT, () => {
-        console.log(`Server Nodejs API running on port ${PORT}`)
-    })
-}).catch((error) =>{
-    console.log(error)
-})
+app.listen(PORT, () => {
+    console.log(`Server Node.js API running on port ${PORT}`);
+});
