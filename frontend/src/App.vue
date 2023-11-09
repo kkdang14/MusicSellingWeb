@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     
-    <Header v-if="showHeader"></Header>
+    <Header v-if="showHeader" :isHomePage="isHomePage"></Header>
     
     <router-view class="router-view"></router-view>
 
@@ -28,6 +28,11 @@ export default {
       const excludedRoutes = ['login', 'register', 'admin', 'product-management',
                               'user-management', 'overall', 'order', 'notfound', 'add-product', 'product-form'];
       return !excludedRoutes.includes(this.$route.name);
+    },
+
+    isHomePage() {
+      // Adjust the condition based on the route where you want the homepage style
+      return this.$route.name === 'home'; 
     },
   },
 };

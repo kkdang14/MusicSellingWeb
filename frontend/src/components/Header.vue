@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <nav class="nav">
+        <nav class="nav" :class="{ 'transparent-header': isHomePage, 'normal-header': !isHomePage }">
             <div class="nav-bar">
                 <router-link to="/" class="logo">432Hz</router-link>
                 <router-link to="/" class="nav-bar__item">Home</router-link>
@@ -24,12 +24,31 @@
 
 <script>
 export default {
-    
+    props: {
+        isHomePage: {
+            type: Boolean,
+            default: false,
+        },
+    },
 };
 </script>
 
 <style scoped>
-.nav {
+
+.transparent-header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.normal-header {
     display: flex;
     justify-content: space-between;
     align-content: center;

@@ -7,11 +7,11 @@ const userRoute = require("./routes/users.route")
 const errorMiddleware = require("./middlewares/error")
 require("dotenv").config();
 
-const DB_URL = process.env.DB_URL;
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());    
+
 //routes
 app.use('/api/products', productRoute);
 app.use('/api/users', userRoute);
