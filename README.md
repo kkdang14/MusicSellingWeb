@@ -18,3 +18,4 @@
     - jquery: https://api.jquery.com/
     - popper: https://popper.js.org/docs/v2/
     - vue-router: https://router.vuejs.org/
+    - vue3-toastify: https://www.npmjs.com/package/vue3-toastify
