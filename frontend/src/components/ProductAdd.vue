@@ -3,7 +3,7 @@
         <div class="container">
             <div class="add-new">Add New Product</div>
             <div class="form">
-                <form @submit.prevent="add">
+                <form @submit.prevent="add" enctype="multipart/form-data">
                     <div class="form-item">
                         <label class="label" for="title">Title</label><br />
                         <input class="input" type="text" id="title" placeholder="Product title" v-model="formData.title" />
@@ -21,7 +21,7 @@
 
                     <div class="form-item">
                         <label class="label" for="img">Image</label><br />
-                        <input class="input" id="img" type="text" placeholder="Image" v-model="formData.image" />
+                        <input class="input" type="file" id="img" accept="image/*" @change="handleFileUpload" />
                     </div>
 
                     <div class="form-item">
@@ -56,7 +56,7 @@ export default {
                 title: "",
                 artist: "",
                 desc: "",
-                image: "",
+                image: null,
                 price: "",
                 category: ""
             },
@@ -69,6 +69,13 @@ export default {
     methods: {
         async add() {
             try {
+                const formData = new FormData();
+                formData.append('title', this.formData.title);
+                formData.append('artist', this.formData.artist);
+                formData.append('desc', this.formData.desc);
+                formData.append('image', this.$refs.fileInput.files[0]); // Append the image file
+                formData.append('price', this.formData.price);
+                formData.append('category', this.formData.category);
                 const response = await ProductService.createProduct(this.formData);
                 console.log(response.data);
                 toast.success('Added successfully!', {
@@ -81,6 +88,11 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        handleFileUpload(event) {
+            const file = event.target.files[0]; // Get the selected file
+            this.formData.image = file; // Store the selected file in formData.image
         },
     },
 };

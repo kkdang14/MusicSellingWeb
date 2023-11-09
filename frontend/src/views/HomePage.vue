@@ -48,16 +48,8 @@
 
 <script>
 
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
-
 export default {
     name: 'Home',
 
-    setup() {
-        toast.info('Welcome to Music Album E-Commerce Website!', {
-            autoClose: 1000,
-        })
-    }
 }
 </script>

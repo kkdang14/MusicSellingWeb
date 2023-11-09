@@ -38,11 +38,10 @@ export default {
     height: auto;
 }
 .vertical-menu {
-    background-color: #333;
+    background-color: var(--header);
     width: 100px;
     height: 100vh;
     padding: 10px;
-    border-radius: 5px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }

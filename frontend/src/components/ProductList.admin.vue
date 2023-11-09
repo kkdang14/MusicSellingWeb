@@ -1,10 +1,6 @@
 <template>
     <div class="product-list__admin">
         <div class="container">
-            <div class="add-product">
-                Add new product
-                <router-link :to="{name: 'add-product'}"><button class="btn-add"><i class="fa-solid fa-plus"></i></button></router-link>
-            </div>
             <div v-for="product in products" :key="product._id">
                 <div class="product-item">
                     <div class="img">
@@ -14,6 +10,13 @@
                     <i class="fa-solid fa-pen" @click="editProduct(product._id)"></i>
                     <i class="fa-solid fa-trash" @click="deleteProduct(product._id)" ></i>
                 </div>
+                <div class="product-details">
+                    <p>{{ product.desc }}</p>
+                </div>
+            </div>
+            <div class="add-product">
+                Add new product
+                <router-link :to="{name: 'add-product'}"><button class="btn-add"><i class="fa-solid fa-plus"></i></button></router-link>
             </div>
         </div>
     </div>
@@ -69,8 +72,10 @@ export default {
     }
 
     .add-product{
+        margin-top: 10px;
         padding: 10px;
         border: 1px solid var(--black);
+        border-radius: 10px;
         width: 25%;
         text-align: center;
         font-size: 18px;
@@ -80,7 +85,7 @@ export default {
     .btn-add{
         background: transparent;
         width: 40px;
-        border-radius: 5px  ;
+        border-radius: 5px;
     }
 
     .btn-add:hover{
@@ -97,7 +102,7 @@ export default {
 
     .item{
         display: flex;
-        justify-content: center;
+        /* justify-content: center; */
         font-size: 18px;
         margin: 15px;
         width: 300px;
@@ -107,6 +112,21 @@ export default {
     .fa-trash:hover{
         color: var(--black-hover);
         cursor: pointer;
+    }
+
+    .product-details {
+        display: none;
+        background-color: white;
+        border: 1px solid var(--black);
+        padding: 10px;
+        z-index: 1;
+        width: 300px;
+        position: absolute;
+        top: 100%; /* Adjust this value to position it below the product */
+    }
+
+    .product-item:hover .product-details {
+        display: block;
     }
     
 </style>

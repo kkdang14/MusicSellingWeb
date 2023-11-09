@@ -4,7 +4,7 @@ const upload = require("../middlewares/upload")
 
 const router = express.Router()
 
-router.post('/',products.createProduct)
+router.post('/',upload.single("image") ,products.createProduct)
 router.get('/', products.getAll)
 router.get('/:id', products.getOne)
 router.put('/:id', products.updateOne)

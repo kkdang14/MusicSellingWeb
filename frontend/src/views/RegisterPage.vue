@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import UserService from "../services/users.service";
 export default {
     data() {
@@ -119,7 +121,9 @@ export default {
             try {
                 const response = await UserService.createUser(this.formData);
                 console.log(response.data);
-                alert("Registration successful");
+                toast.success('Registration successful', {
+                    autoClose: 3000,
+                })
                 this.$router.push({ name: "login" });
             } catch (error) {
                 alert("Registration failed: username or email is exist")

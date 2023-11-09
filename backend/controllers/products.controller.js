@@ -3,7 +3,15 @@ const asyncHandler = require("express-async-handler");
 
 const createProduct = asyncHandler(async (req, res) => {
     try {
-        const product = await Products.create(req.body);
+        if (!req.file) {
+            return res.status(500).json({message: "No file found"})
+        }
+        const data = {
+            ...req.body,
+            image: req.file.filename
+
+        }
+        const product = await Products.create(data);
         res.status(200).json(product);
     } catch (error) {
         res.status(500);
