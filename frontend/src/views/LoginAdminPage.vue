@@ -2,7 +2,7 @@
 <template>
     <div class="login_page">
         <div class="container">
-            <div class="login">Login</div>
+            <div class="login">Login Admin</div>
             <form @submit.prevent="login" class="form">
                 <div class="form-item">
                     <label for="username" class="label">Username</label><br>
@@ -40,12 +40,13 @@ export default {
             try {
                 const response = await authService.login(this.formData)
                 console.log(response)
-                toast.success('Login successfully', {
-                    autoClose: 800,
-                })
-                setTimeout(() => {
-                    this.$router.push({name: 'home'})
-                }, 1500);
+                // toast.success('Login successfully', {
+                //     autoClose: 800,
+                // })
+                // setTimeout(() => {
+                //     this.$router.push({name: 'admin'})
+                // }, 1500);
+                this.$router.push({name: 'admin'})
             } catch (error) {
                 console.log(error)
             }

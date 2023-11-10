@@ -21,13 +21,25 @@
                 <i class="fa-solid fa-right-from-bracket"></i>
             </router-link>
         </div>
+        <welcom-admin v-if="showWelcome"></welcom-admin>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+import WelcomAdmin from '../components/WelcomAdmin.vue';
 export default {
-    
+    components: {
+        WelcomAdmin
+    },
+
+    computed: {
+        showWelcome() {
+            const excludedRoutes = ['product-management',
+                                'user-management', 'overall', 'order', 'add-product', 'product-form'];
+            return !excludedRoutes.includes(this.$route.name);
+        },
+    }
 }
 </script>
 
@@ -41,7 +53,6 @@ export default {
     background-color: var(--header);
     width: 100px;
     height: 100vh;
-    padding: 10px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -51,8 +62,8 @@ export default {
     color: #fff;
     text-decoration: none;
     margin-bottom: 80px;
-    margin-top: 30px;
-    padding: 10px 0;
+    margin-top: 20px;
+    padding: 5px 0;
     border-bottom: 1px solid #444;
     transition: background-color 0.3s;
 }

@@ -169,7 +169,7 @@ export default {
             // }
             try {
                 const response = await UserService.createUser(this.formData);
-                console.log(response.data);
+                console.log(response);
                 toast.success('Registration successful', {
                     autoClose: 3000,
                 })

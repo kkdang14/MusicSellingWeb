@@ -29,6 +29,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     background: var(--black);
+    margin-top: -70px;
     padding: 30px 0px;
     font-family: 'Play', sans-serif;
     text-align: center;

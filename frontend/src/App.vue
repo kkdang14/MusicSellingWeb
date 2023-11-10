@@ -20,12 +20,12 @@ export default {
   },
   computed: {
     showHeader() {
-      const excludedRoutes = ['login', 'register',
+      const excludedRoutes = ['login','login-admin', 'register',
                               'notfound', 'add-product', 'product-form'];
       return !excludedRoutes.includes(this.$route.name);
     },
     showFooter() {
-      const excludedRoutes = ['login', 'register', 'admin', 'product-management',
+      const excludedRoutes = ['login','login-admin', 'register', 'admin', 'product-management',
                               'user-management', 'overall', 'order', 'notfound', 'add-product', 'product-form'];
       return !excludedRoutes.includes(this.$route.name);
     },

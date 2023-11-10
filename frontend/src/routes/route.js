@@ -6,7 +6,7 @@ const routes = [
         path: "/",
         name: "home",
         component: () => import('@/views/HomePage.vue'),
-        meta: { title: 'Home' }
+        meta: { title: 'Home' },
     },
 
     {
@@ -34,11 +34,32 @@ const routes = [
         name: "admin",
         component: () => import('@/views/Admin.vue'),
         meta: { title: 'Admin' },
+        beforeEnter: (to, from, next) => {
+            // Check if the user is logged in
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert("You must login before access this page")
+                next({name: 'login-admin'});
+            } else {
+                // Check if the user is an admin
+                const isAdmin = user.isAdmin;
+                if (isAdmin) {
+                    // Allow access for admin users
+                    next()
+                } else {
+                    alert("Just admin can be access this page")
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    next('/')
+                }
+            }
+        },
         children: [
+
             {
                 path: "product-management",
                 name: "product-management",
-                component: () => import("@/components/ProductManagement.vue"),    
+                component: () => import("@/components/ProductManagement.vue"),
             },
 
             {
@@ -77,7 +98,14 @@ const routes = [
         path: "/login",
         name: "login",
         component: () => import('../views/LoginPage.vue'),
-        meta: { title: 'Login' }
+        meta: { title: 'Login' },
+    },
+
+    {
+        path: "/login-admin",
+        name: "login-admin",
+        component: () => import('../views/LoginAdminPage.vue'),
+        meta: { title: 'Login Admin' },
     },
 
     {
@@ -88,17 +116,42 @@ const routes = [
     },
 
     {
+        path: "/profile",
+        name: "profile",
+        component: () => import('../views/Profile.vue'),
+        meta: { title: 'Register' }
+    },
+
+    {
         path: "/cart",
         name: "cart",
         component: () => import('../views/CartPage.vue'),
-        meta: { title: 'Cart' }
+        meta: { title: 'Cart' },
+        beforeEnter: (to, from, next) => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert("You must login before access this page")
+                next('/login');
+            } else {
+                next()
+            }
+        },
     },
 
     {
         path: "/favorite",
         name: "favorite",
         component: () => import('../views/FavoritePage.vue'),
-        meta: { title: 'Favorite' }
+        meta: { title: 'Favorite' },
+        beforeEnter: (to, from, next) => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                alert("You must login before access this page")
+                next('/login');
+            } else {
+                next()
+            }
+        },
     }
 
 ];
