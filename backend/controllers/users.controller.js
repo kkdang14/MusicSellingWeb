@@ -60,7 +60,17 @@ const deleteOne = asyncHandler(async (req, res) => {
 const deleteAll = asyncHandler(async (req, res) => {
     try {
         const result = await Users.deleteMany({});
-        res.status(200).json({message:`Deleted ${result.deletedCount} products.`});
+        res.status(200).json({message:`Deleted ${result.deletedCount} users.`});
+    } catch (error) {
+        res.status(500);
+        throw new Error(error.message)
+    }
+})
+
+const getClient = asyncHandler(async (req, res) => {
+    try {
+        const user = await Users.find({ role: "client" });
+        res.status(200).json(user);
     } catch (error) {
         res.status(500);
         throw new Error(error.message)
@@ -73,5 +83,6 @@ module.exports = {
     getOne,
     updateOne,
     deleteOne,
-    deleteAll
+    deleteAll,
+    getClient
 }

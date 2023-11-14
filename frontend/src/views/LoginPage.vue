@@ -48,6 +48,9 @@ export default {
                 }, 1500);
             } catch (error) {
                 console.log(error)
+                toast.error('Error!', {
+                    autoClose: 800,
+                })
             }
 
         },
@@ -61,6 +64,8 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background: url("../../public/image/background_login.jpg") no-repeat center;
+    background-size: cover;
 }
 
 .container {
@@ -70,7 +75,8 @@ export default {
     text-align: center;
     padding: 20px;
     margin-top: 10px;
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
+    background-color: transparent;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -99,6 +105,7 @@ export default {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    background-color: transparent; 
 }
 
 .btn {

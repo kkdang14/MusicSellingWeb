@@ -42,6 +42,7 @@ export default {
     .page{
       height: auto;
       width: 100%;
+      background: var(--black);
     }
     
     .router-view {

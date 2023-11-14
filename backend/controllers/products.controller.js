@@ -1,22 +1,19 @@
 const Products = require("../models/products.model");
 const asyncHandler = require("express-async-handler");
+// const upload = require('../middlewares/upload');
+// const path = require('path')
 
 const createProduct = asyncHandler(async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(500).json({message: "No file found"})
-        }
-        const data = {
+        const product = await Products.create({
             ...req.body,
-            image: req.file.filename
+            image: req.file ? req.file.filename : null
+        });
 
-        }
-        const product = await Products.create(data);
-        res.status(200).json(product);
+        res.status(200).json({ message: 'Product added successfully', product });
     } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
-    } 
+        res.status(500).json({ error: error.message });
+    }
 })
 
 const getAll = asyncHandler(async (req, res) =>{
@@ -85,4 +82,4 @@ module.exports = {
     updateOne,
     deleteOne,
     deleteAll
-}
+} 

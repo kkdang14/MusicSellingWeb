@@ -29,11 +29,11 @@
     flex-direction: column;
     justify-content: space-evenly;
     background: var(--black);
-    margin-top: -70px;
+    margin-top: 10px;
     padding: 30px 0px;
     font-family: 'Play', sans-serif;
     text-align: center;
-    height: 360px;
+    height: 250px;
 }
 
 .footer .icon{
@@ -42,7 +42,7 @@
 }
 
 .footer .icon .icon-item{
-    color: var(--gray);
+    color: var(--black-hover);
     font-size: 30px;
     padding: 20px;
 }
@@ -53,7 +53,7 @@
 }
 
 .footer .row .row-item {
-    color: var(--gray);
+    color: var(--black-hover);
     transition: 0.5s;
 }
 

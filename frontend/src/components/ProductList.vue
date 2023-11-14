@@ -6,13 +6,13 @@
                 <div v-for="product in products" :key="product._id">
                     <div class="item" v-if="product.category === 'Album'">
                         <div class="img">
-                            <img :src="product.image" alt="Product Image" />
+                            <img :src="'../images/' + product.image" alt="Product Image" />
                         </div>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
-                            <button class="buy-now">Buy now</button>
+                            <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link>
                         </div>
                     </div>
                 </div>
@@ -24,13 +24,13 @@
                 <div v-for="product in products" :key="product._id">
                     <div class="item" v-if="product.category === 'EP'">
                         <div class="img">
-                            <img :src="product.image" alt="Product Image" />
+                            <img src="" alt="Product Image" />
                         </div>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
-                            <button class="buy-now">Buy now</button>
+                            <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link>
                         </div>
                     </div>
                 </div>
@@ -44,6 +44,19 @@ export default {
     props: {
         products: Array, 
     },
+
+    // created() {
+    //     this.getImageUrl();
+    // },
+    
+
+
+    methods: {
+        // getImageUrl(imageName) {
+        //     // Replace this with the actual base image URL from your server
+        //     return `http://localhost:3000/uploads/images/${imageName}`;
+        // },
+    }
 };
 </script>
 

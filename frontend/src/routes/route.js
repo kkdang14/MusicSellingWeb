@@ -30,7 +30,7 @@ const routes = [
     },
 
     {
-        path: "/admin",
+        path: "/manager",
         name: "admin",
         component: () => import('@/views/Admin.vue'),
         meta: { title: 'Admin' },
@@ -42,8 +42,8 @@ const routes = [
                 next({name: 'login-admin'});
             } else {
                 // Check if the user is an admin
-                const isAdmin = user.isAdmin;
-                if (isAdmin) {
+                const role = user.role;
+                if (role) {
                     // Allow access for admin users
                     next()
                 } else {

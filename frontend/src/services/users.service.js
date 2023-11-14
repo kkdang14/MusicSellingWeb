@@ -29,6 +29,15 @@ class UserService {
         }
     }
 
+    async getUserClient() {
+        try {
+            const response = await this.apiClient.get('/getUser')
+            response.data;
+        } catch (error) {
+            throw error
+        }
+    }
+
     async getUserById(userId) {
         try {
             const response = await this.apiClient.get(`/${userId}`);

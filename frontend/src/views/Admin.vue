@@ -1,19 +1,19 @@
 <template>
     <div class="admin-page">
         <div class="vertical-menu">
-            <router-link to="/admin/user-management" class="menu-item">
+            <router-link to="/manager/user-management" class="menu-item">
                 <i class="fa-solid fa-user"></i><br>
                 Users
             </router-link>
-            <router-link to="/admin/product-management" class="menu-item">
+            <router-link to="/manager/product-management" class="menu-item">
                 <i class="fa-solid fa-box"></i><br>
                 Products
             </router-link>
-            <router-link to="/admin/overall" class="menu-item">
+            <router-link to="/manager/overall" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i><br>
                 Analytics
             </router-link>
-            <router-link to="/admin/order" class="menu-item">
+            <router-link to="/manager/order" class="menu-item">
                 <i class="fa-solid fa-dolly"></i><br>
                 Order
             </router-link>
@@ -50,7 +50,7 @@ export default {
     height: auto;
 }
 .vertical-menu {
-    background-color: var(--header);
+    background-color: var(--black);
     width: 100px;
     height: 100vh;
     text-align: center;

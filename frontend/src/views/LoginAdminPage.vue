@@ -40,13 +40,13 @@ export default {
             try {
                 const response = await authService.login(this.formData)
                 console.log(response)
-                // toast.success('Login successfully', {
-                //     autoClose: 800,
-                // })
-                // setTimeout(() => {
-                //     this.$router.push({name: 'admin'})
-                // }, 1500);
-                this.$router.push({name: 'admin'})
+                toast.success('Login successfully', {
+                    autoClose: 800,
+                })
+                setTimeout(() => {
+                    this.$router.push({name: 'admin'})
+                }, 1500);
+                // this.$router.push({name: 'admin'})
             } catch (error) {
                 console.log(error)
             }

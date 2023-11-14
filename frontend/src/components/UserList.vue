@@ -1,62 +1,34 @@
 <template>
-    <div class="product-list__admin">
+    <div class="user-list__admin">
         <div class="container">
-            <div v-for="product in products" :key="product._id">
-                <div class="product-item">
-                    <div class="img">
-                        <img :src="product.image" alt="Product Image" />
-                    </div>
-                    <div class="item">{{ product.category }} - {{ product.title }} - {{ product.artist }}</div>
-                    <i class="fa-solid fa-pen" @click="editProduct(product._id)"></i>
-                    <i class="fa-solid fa-trash" @click="deleteProduct(product._id)" ></i>
+            <div v-for="user in users" :key="user._id">
+                <div v-if="user.role === 'client'" class="user-item">
+                    <div class="item" >{{ user.firstname }} {{ user.lastname }}</div>
+                    <i class="fa-solid fa-pen" @click="editProduct(user._id)"></i>
+                    <i class="fa-solid fa-trash" @click="deleteProduct(user._id)" ></i>
                 </div>
-                <div class="product-details">
+                <!-- <div class="product-details">
                     <p>{{ product.desc }}</p>
-                </div>
+                </div> -->
             </div>
-            <div class="add-product">
+            <!-- <div class="add-product">
                 Add new product
                 <router-link :to="{name: 'add-product'}"><button class="btn-add"><i class="fa-solid fa-plus"></i></button></router-link>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
 
 <script>
-import ProductService from '../services/products.service';
 export default {
     props: {
-        products: Array
-    },
-
-    methods: {
-        editProduct(product) {
-            this.$router.push({ name: 'product-form', params: { id: product._id } });
-        },
-
-        reload() {
-            window.location.reload();    
-        },
-
-        async deleteProduct(productId) {
-            if (confirm("Do you want to remove this product")) {
-                try {
-                    const response = await ProductService.deleteProduct(productId)
-                    console.log(response.data)
-                    this.products = this.products.filter(product => product._id !== productId);
-                } catch (error) {
-                    console.log(error)
-                }
-            } else {
-                return false; // Prevent page reload
-            }
-        }
+        users: Array,
     }
 }
 </script>
 
 <style scoped>
-    .product-list__admin{
+    .user-list__admin{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -71,7 +43,7 @@ export default {
         margin-top: 20px;
     }
 
-    .add-product{
+    /* .add-product{
         margin-top: 10px;
         padding: 10px;
         border: 1px solid var(--black);
@@ -91,9 +63,9 @@ export default {
     .btn-add:hover{
         background: var(--black);
         color: var(--white);
-    }
+    } */
 
-    .product-item{
+    .user-item{
         display: flex;
         justify-content: space-around;
         border-bottom: 1px solid var(--black);

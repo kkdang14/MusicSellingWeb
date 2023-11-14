@@ -71,9 +71,11 @@
 
 <script>
 
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 export default {
     name: 'Home',
-
 }
 </script>
 
@@ -101,6 +103,7 @@ export default {
     .contact{
         margin: 20px;
         display: flex;
+        height: 500px;
         justify-content: center;
         align-items: center;
         flex-direction: column;

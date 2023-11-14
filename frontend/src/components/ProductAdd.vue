@@ -3,7 +3,7 @@
         <div class="container">
             <div class="add-new">Add New Product</div>
             <div class="form">
-                <form @submit.prevent="add" enctype="multipart/form-data">
+                <form @submit.prevent="add" action="" enctype="multipart/form-data" method="post">
                     <div class="form-item">
                         <label class="label" for="title">Title</label><br />
                         <input class="input" type="text" id="title" placeholder="Product title" v-model="formData.title" />
@@ -67,32 +67,32 @@ export default {
     },
 
     methods: {
+        handleFileUpload(event) {
+            const file = event.target.files[0]; 
+            this.formData.image = file;
+        },
+
         async add() {
             try {
                 const formData = new FormData();
                 formData.append('title', this.formData.title);
                 formData.append('artist', this.formData.artist);
                 formData.append('desc', this.formData.desc);
-                formData.append('image', this.$refs.fileInput.files[0]); // Append the image file
+                formData.append('image', this.formData.image); // Append the image file
                 formData.append('price', this.formData.price);
                 formData.append('category', this.formData.category);
                 const response = await ProductService.createProduct(this.formData);
-                console.log(response.data);
+                console.log(response);
                 toast.success('Added successfully!', {
-                    onClose: () => {
-                        this.$router.push({ name: 'product-management' });
-                    },
-                    
                     autoClose: 1200,
                 })
+                this.$router.push({ name: 'product-management' });
             } catch (error) {
                 console.log(error);
+                toast.error('Error!', {
+                    autoClose: 1200,
+                })
             }
-        },
-
-        handleFileUpload(event) {
-            const file = event.target.files[0]; // Get the selected file
-            this.formData.image = file; // Store the selected file in formData.image
         },
     },
 };

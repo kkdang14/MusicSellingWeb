@@ -108,7 +108,8 @@ export default {
     align-content: center;
     width: 100%;
     height: 70px;
-    background-color: rgb(30, 30, 30);
+    background-color: var(--black);
+    border-bottom: 1px solid var(--white);  
 }
 
 .nav-bar {
@@ -120,7 +121,8 @@ export default {
 
 .logo {
     margin: 5px;
-    font-size: 25px;
+    font-size: 26px;
+    font-weight: 600;
     color: #fff;
     text-decoration: none;
 }
@@ -149,7 +151,7 @@ export default {
 .profile,
 .login {
     margin: 10px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
     color: #fff;
     cursor: pointer;

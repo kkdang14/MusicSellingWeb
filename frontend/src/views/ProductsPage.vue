@@ -1,7 +1,9 @@
 <template>
     <div class="product">
         <Searching @search="performSearch"/>
-        <p v-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p>
+        <div v-if="error">{{ error }}</div>
+        <div v-if="loading">Loading...</div>
+        <!-- <p v-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p> -->
         <p v-else-if="filteredProducts.length === 0">Không tìm thấy sản phẩm phù hợp</p>
         <div class="product-area">
             <product-list :products="filteredProducts"/>
@@ -20,6 +22,8 @@ export default {
         return {
             products: [], // The complete list of products
             searchText: '', // The search input text
+            loading: false,
+            error: null,
         };
     },
     created() {
@@ -30,13 +34,17 @@ export default {
             this.searchText = searchText;
         },
 
-        async retrieveProduct(){
+        async retrieveProduct() {
             try {
+                this.loading = true;
                 this.products = await ProductService.getAllProducts();
             } catch (error) {
-                console.log(error);
+                console.error(error);
+                this.error = 'An error occurred while fetching products.';
+            } finally {
+                this.loading = false;
             }
-        },
+    },
 
         normalizeText(text) {
         // Normalize text using the 'unorm' library
@@ -55,12 +63,13 @@ export default {
 <style scoped>
     .product{
         text-align: center;
+        background-color: var(--white);
     }
     .product-area{
         /* display: flex;
         justify-content: center; */
         width: 100%;
-        background-color: #fff; 
+        background-color: var(--white);
         margin-bottom: 70px;
     }
 </style>
