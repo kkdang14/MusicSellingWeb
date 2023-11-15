@@ -171,11 +171,12 @@ export default {
                 const response = await UserService.createUser(this.formData);
                 console.log(response);
                 toast.success('Registration successful', {
-                    autoClose: 3000,
+                    autoClose: 1500,
                 })
-                this.$router.push({ name: "login" });
+                setTimeout(() => {
+                    this.$router.push({ name: "login" });
+                }, 800);
             } catch (error) {
-                alert("Registration failed: username or email is exist")
                 console.error("Registration failed:", error);
             }
         },

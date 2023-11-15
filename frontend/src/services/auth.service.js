@@ -1,4 +1,4 @@
-import createApiClient from "./api.service"
+import createApiClient from "./api.user.service"
 
 class AuthService {
     constructor(baseUrl = "/api/users") {

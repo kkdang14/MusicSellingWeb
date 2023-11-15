@@ -1,7 +1,8 @@
 const Products = require("../models/products.model");
 const asyncHandler = require("express-async-handler");
-// const upload = require('../middlewares/upload');
-// const path = require('path')
+const fs = require('fs');
+const upload = require('../middlewares/upload');
+const path = require('path')
 
 const createProduct = asyncHandler(async (req, res) => {
     try {
@@ -57,6 +58,17 @@ const deleteOne = asyncHandler(async (req, res) =>{
         const product = await Products.findByIdAndDelete(req.params.id, req.body)
         if(!product){
             res.status(404).json({message: `Can not find product with ID: ${req.params.id}` })
+        }
+        const imagePath = path.join(__dirname, '..', 'uploads', product.image);
+
+        if (product.image) {
+            fs.unlink(imagePath, (err) => {
+                if (err) {
+                    console.error(`Error deleting image file: ${err}`);
+                } else {
+                    console.log(`Image file deleted: ${product.image}`);
+                }
+                });
         }
         res.status(200).json({message: `Product with ID: ${req.params.id} was deleted`});
     } catch(error) {

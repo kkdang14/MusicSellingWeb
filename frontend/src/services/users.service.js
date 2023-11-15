@@ -1,8 +1,7 @@
-// import axios from 'axios';
-import createApiClient from "./api.service"
+import createApiClient from "./api.user.service"
 
 class UserService {
-    constructor(baseUrl = "/api/users"){
+    constructor(baseUrl = "http://localhost:3000/api/users"){
         this.apiClient = createApiClient(baseUrl)
     }
     // constructor(baseUrl = '/api/users') {

@@ -4,7 +4,7 @@
             <div v-for="product in products" :key="product._id">
                 <div class="product-item">
                     <div class="img">
-                        <img :src="product.image" alt="Product Image" />
+                        <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
                     </div>
                     <div class="item">{{ product.category }} - {{ product.title }} - {{ product.artist }}</div>
                     <i class="fa-solid fa-pen" @click="editProduct(product._id)"></i>
@@ -14,10 +14,10 @@
                     <p>{{ product.desc }}</p>
                 </div>
             </div>
-            <div class="add-product">
-                Add new product
-                <router-link :to="{name: 'add-product'}"><button class="btn-add"><i class="fa-solid fa-plus"></i></button></router-link>
-            </div>
+        </div>
+        <div class="add-product">
+            Add new product
+            <router-link :to="{name: 'add-product'}"><button class="btn-add"><i class="fa-solid fa-plus"></i></button></router-link>
         </div>
     </div>
 </template>
@@ -34,23 +34,23 @@ export default {
             this.$router.push({ name: 'product-form', params: { id: product._id } });
         },
 
-        reload() {
-            window.location.reload();    
-        },
-
         async deleteProduct(productId) {
             if (confirm("Do you want to remove this product")) {
-                try {
+                try {   
                     const response = await ProductService.deleteProduct(productId)
-                    console.log(response.data)
-                    this.products = this.products.filter(product => product._id !== productId);
+                    console.log(response)
+                    this.products = this.products.filter((product) => {
+                        if (product._id !== productId) {
+                            return product._id;
+                        }
+                    });
                 } catch (error) {
                     console.log(error)
                 }
             } else {
                 return false; // Prevent page reload
             }
-        }
+        },
     }
 }
 </script>
@@ -61,18 +61,22 @@ export default {
         flex-direction: column;
         align-items: center;
         width: 100%;
+        height: 90vh;
+        background-color: var(--white);
     }
 
     .container {
         display: flex;
         width: 70%;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         flex-direction: column;
         margin-top: 20px;
+        overflow-y: scroll; /* Add this line to enable vertical scrollbar */
+        max-height: 550px; /* Set a maximum height for the container */
     }
 
     .add-product{
-        margin-top: 10px;
+        margin-top: 20px;
         padding: 10px;
         border: 1px solid var(--black);
         border-radius: 10px;
@@ -98,6 +102,12 @@ export default {
         justify-content: space-around;
         border-bottom: 1px solid var(--black);
         align-items: center;
+        padding: 10px;
+    }
+
+    .img{
+        height: 90px;
+        width: 90px;
     }
 
     .item{

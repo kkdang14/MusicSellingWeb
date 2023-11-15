@@ -47,9 +47,9 @@ export default {
     },
 
         normalizeText(text) {
-        // Normalize text using the 'unorm' library
-        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    },
+            // Normalize text using the 'unorm' library
+            return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        },
     },
     computed: {
         filteredProducts() {

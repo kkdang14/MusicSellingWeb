@@ -109,7 +109,6 @@ export default {
     width: 100%;
     height: 70px;
     background-color: var(--black);
-    border-bottom: 1px solid var(--white);  
 }
 
 .nav-bar {

@@ -48,6 +48,7 @@ export default {
     display: flex;
     width: 100%;
     height: auto;
+    background-color: var(--white);
 }
 .vertical-menu {
     background-color: var(--black);
@@ -61,7 +62,7 @@ export default {
     display: block;
     color: #fff;
     text-decoration: none;
-    margin-bottom: 80px;
+    margin-bottom: 90px;
     margin-top: 20px;
     padding: 5px 0;
     border-bottom: 1px solid #444;

@@ -5,14 +5,14 @@
             <div class="container">
                 <div v-for="product in products" :key="product._id">
                     <div class="item" v-if="product.category === 'Album'">
-                        <div class="img">
-                            <img :src="'../images/' + product.image" alt="Product Image" />
-                        </div>
+                        <router-link :to="{ name: 'product-detail', params: { id: product._id } }" class="img">
+                            <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
+                        </router-link>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
-                            <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link>
+                            <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
                     </div>
                 </div>
@@ -23,14 +23,14 @@
             <div class="container">
                 <div v-for="product in products" :key="product._id">
                     <div class="item" v-if="product.category === 'EP'">
-                        <div class="img">
-                            <img src="" alt="Product Image" />
-                        </div>
+                        <router-link :to="{ name: 'product-detail', params: { id: product._id } }" class="img">
+                            <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
+                        </router-link>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
-                            <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link>
+                            <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
                     </div>
                 </div>
@@ -105,6 +105,7 @@ export default {
     width: 250px;
     border-radius: 10px;
     text-align: center;
+    text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -116,15 +117,16 @@ export default {
 }
 
 .img {
-    width: 100%;
-    height: 100%;
+    margin-top: 5px;
+    width: 200px;
+    /* height: 200; */
     border: 2px solid black;
 }
 
 .img img {
     width: 100%;
     height: 200px;
-    object-fit: contain;
+    /* object-fit: contain; */
 }
 
 .details {
@@ -134,16 +136,12 @@ export default {
 .name {
     font-weight: bold;
     font-size: 1.2rem;
-    height: 60px;
-    text-align: center;
-    line-height: 60px;
-    overflow: hidden;
-    white-space: normal; /* This allows text to wrap to the next line */
-    text-overflow: clip;
+    color: var(--black);
 }
 
 .price {
     font-size: 1.2rem;
+    color: var(--black);
 }
 
 .add-to-cart,

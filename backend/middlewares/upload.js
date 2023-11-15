@@ -4,7 +4,7 @@ const path = require('path');
 // Multer configuration
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, path.join(__dirname, 'uploads/'));
+        callback(null, path.join(__dirname, '../uploads/'));
     },
     filename: (req, file, callback) => {
         const filename = `${Date.now()}-${file.originalname}`;
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, callback) => {
-    const allowedMimes = ['image/jpeg', 'image/png'];
+    const allowedMimes = ['image/jpg', 'image/png'];
     if (allowedMimes.includes(file.mimetype)) {
         callback(null, true);
     } else {

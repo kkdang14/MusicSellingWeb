@@ -21,7 +21,7 @@
 
                     <div class="form-item">
                         <label class="label" for="img">Image</label><br />
-                        <input class="input" type="file" id="img" accept="image/*" @change="handleFileUpload" />
+                        <input class="input" type="file" id="img" accept="image/jpg, image/png" @change="handleFileUpload" />
                     </div>
 
                     <div class="form-item">
@@ -74,6 +74,13 @@ export default {
 
         async add() {
             try {
+
+                if (!this.formData.title || !this.formData.artist || !this.formData.image || !this.formData.price || !this.formData.category) {
+                    toast.error('Please fill in all required fields.', { autoClose: 3000 });
+                    return;
+                }
+
+
                 const formData = new FormData();
                 formData.append('title', this.formData.title);
                 formData.append('artist', this.formData.artist);
@@ -86,12 +93,14 @@ export default {
                 toast.success('Added successfully!', {
                     autoClose: 1200,
                 })
-                this.$router.push({ name: 'product-management' });
+
+                setTimeout(() => {
+                    this.$router.push({ name: 'product-management' });
+                }, 800);
             } catch (error) {
                 console.log(error);
-                toast.error('Error!', {
-                    autoClose: 1200,
-                })
+                const errorMessage = error.response?.data?.error || 'Error!';
+                toast.error(errorMessage, { autoClose: 3000 });
             }
         },
     },
@@ -105,6 +114,7 @@ export default {
     align-items: center;
     width: 100%;
     height: 100vh;
+    background-color: var(--white);
 }
 
 .container {

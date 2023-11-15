@@ -1,7 +1,7 @@
 <template>
     <div class="product-detail">
         <div class="product-info">
-            <img src="/image/tlinh.png" alt="Product Image"  class="img"/>
+            <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image"  class="img"/>
             <div class="details">
                 <h1 v-if ="product.category === 'Album'"> Album {{ product.title }}</h1>
                 <h1 v-if ="product.category === 'EP'">EP {{ product.title }}</h1>

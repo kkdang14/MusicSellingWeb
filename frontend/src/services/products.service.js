@@ -1,7 +1,7 @@
 import createApiClient from "./api.service"
 
 class ProductService {
-    constructor(baseUrl = "/api/products"){
+    constructor(baseUrl = "http://localhost:3000/api/products"){
         this.apiClient = createApiClient(baseUrl)
     }
 
