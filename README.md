@@ -11,6 +11,7 @@
     - jsonwebtoken: https://www.npmjs.com/package/jsonwebtoken
     - nodemon: https://www.npmjs.com/package/nodemon
     - async-express-handler: https://www.npmjs.com/package/express-async-handler
+    - multer: https://www.npmjs.com/package/multer
 # Frontend
     - Vuejs: https://vuejs.org/guide/introduction.html
     - Vitejs: https://vitejs.dev/guide/
