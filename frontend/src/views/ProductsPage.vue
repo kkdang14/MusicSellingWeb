@@ -2,8 +2,8 @@
     <div class="product">
         <Searching @search="performSearch"/>
         <div v-if="error">{{ error }}</div>
-        <div v-if="loading">Loading...</div>
-        <!-- <p v-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p> -->
+        <div v-if="loading"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
+        <p v-else-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p>
         <p v-else-if="filteredProducts.length === 0">Không tìm thấy sản phẩm phù hợp</p>
         <div class="product-area">
             <product-list :products="filteredProducts"/>
@@ -71,5 +71,9 @@ export default {
         width: 100%;
         background-color: var(--white);
         margin-bottom: 70px;
+    }
+
+    .fa-spinner{
+        font-size: 40px;
     }
 </style>

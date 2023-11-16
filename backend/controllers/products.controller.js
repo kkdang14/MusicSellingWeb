@@ -42,7 +42,37 @@ const getOne = asyncHandler(async (req, res) =>{
 
 const updateOne = asyncHandler(async (req, res) =>{
     try {
-        const product = await Products.findByIdAndUpdate(req.params.id, req.body)
+        // const data = {
+        //     ...req.body,
+        //     image: req.file ? req.file.filename : null
+        // }
+        const productId = req.params.id;
+        const existingProduct = await Products.findById(productId);
+
+        if (!existingProduct) {
+            return res.status(404).json({ message: `Cannot find product with ID: ${productId}` });
+        }
+
+        // Check if a new image file is uploaded
+        if (req.file) {
+            // Remove the old image file
+            if (existingProduct.image) {
+                const imagePath = path.join(__dirname, '..', 'uploads', existingProduct.image);
+                fs.unlink(imagePath, (err) => {
+                    if (err) {
+                        console.error(`Error deleting old image file: ${err}`);
+                    } else {
+                        console.log(`Old image file deleted: ${existingProduct.image}`);
+                    }
+                });
+            }
+        }
+
+        const data = {
+            ...req.body,
+            image: req.file ? req.file.filename : existingProduct.image
+        };
+        const product = await Products.findByIdAndUpdate(productId, data, {new: true})
         if(!product){
             res.status(404).json({message: `Can not find product with ID: ${req.params.id}` })
         }

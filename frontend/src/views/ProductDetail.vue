@@ -3,11 +3,21 @@
         <div class="product-info">
             <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image"  class="img"/>
             <div class="details">
-                <h1 v-if ="product.category === 'Album'"> Album {{ product.title }}</h1>
-                <h1 v-if ="product.category === 'EP'">EP {{ product.title }}</h1>
-                <p>{{ product.desc }}</p>
-                <p>Price: ${{ product.price }}</p>
-                <button @click="addToCart">Add to Cart</button>
+                <h2 v-if ="product.category === 'Album'"> Album {{ product.title }}</h2>
+                <h2 v-if ="product.category === 'EP'">EP {{ product.title }}</h2>
+                <h4>{{ product.artist }}</h4>
+                <div class="price">${{ product.price }}</div>
+                <div class="desc">{{ product.desc }}</div>
+                <div class="favorite">
+                    <i 
+                        @click="toggleFavorite" 
+                        :class="isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                    ></i>
+                </div>
+                <div class="add-to-cart">
+                    <div class="quantity">Quantity</div>
+                    <button class="btn" @click="addToCart">Add to Cart</button>
+                </div>
             </div>
         </div>
     </div>
@@ -15,11 +25,13 @@
 
 <script>
 import ProductsService from '../services/products.service';
+import UserService from '../services/users.service'
 
 export default {
     data() {
         return {
             product: '',
+            isFavorite: false,
         };
     },
     created() {
@@ -31,10 +43,54 @@ export default {
                 const productId = this.$route.params.id;
                 this.product = await ProductsService.getProductById(productId)
                 console.log(this.product)
+                this.checkFavoriteStatus()
             } catch (error) {
                 console.log(error)
             }
-        }
+        },
+
+        checkFavoriteStatus() {
+            // Check if the current product is in the user's favorites
+            try {
+                const user = localStorage.getItem('user');
+                if (user) {
+                    const userData = JSON.parse(user);
+                    this.isFavorite = userData.favorite.includes(this.product._id);
+                } 
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        async toggleFavorite() {
+            // Toggle the favorite status
+            try {
+                const user = localStorage.getItem('user');
+                if (user) {
+                    const userData = JSON.parse(user);
+
+                    // If the product is already in favorites, remove it; otherwise, add it
+                    const index = userData.favorite.indexOf(this.product._id);
+                    if (index !== -1) {
+                        userData.favorite.splice(index, 1);
+                    } else {
+                        userData.favorite.push(this.product._id);
+                    }
+
+                    // Update the user's favorites
+                    // You need an appropriate API endpoint to handle this update
+                    await UserService.updateFavorite(userData._id, userData.favorite);
+
+                    // Update the local storage
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                    // Update the component's isFavorite state
+                    this.isFavorite = !this.isFavorite;
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
     }
 };
 </script>
@@ -64,5 +120,27 @@ export default {
         margin: 10px;
     }
 
+    .price{
+        font-size: 24px;
+        font-weight: 500;
+    }
 
+    .fa-heart{
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .fa-solid{
+        color: var(--favorite);
+    }
+
+    .btn{
+        border: 2px solid var(--black);
+        font-weight: 500;
+    }
+
+    .btn:hover{
+        background-color: var(--black);
+        color: var(--white);
+    }
 </style>

@@ -55,6 +55,15 @@ class UserService {
         }
     }
 
+    async updateFavorite(userId, favorite) {
+        try {
+            const response = await this.apiClient.put(`/${userId}`, { favorite });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async deleteUser(userId) {
         try {
             const response = await this.apiClient.delete(`/${userId}`);

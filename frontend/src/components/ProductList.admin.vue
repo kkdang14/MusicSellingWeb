@@ -2,15 +2,15 @@
     <div class="product-list__admin">
         <div class="container">
             <div v-for="product in products" :key="product._id">
-                <div class="product-item">
+                <div class="product-item" @click="toggleProductDetails(product._id)">
                     <div class="img">
                         <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
                     </div>
-                    <div class="item">{{ product.category }} - {{ product.title }} - {{ product.artist }}</div>
+                    <div class="item">{{ product.category }} {{ product.title }} - {{ product.artist }}</div>
                     <i class="fa-solid fa-pen" @click="editProduct(product._id)"></i>
-                    <i class="fa-solid fa-trash" @click="deleteProduct(product._id)" ></i>
+                    <i class="fa-solid fa-trash" @click="deleteProduct(product._id, product.title)" ></i>
                 </div>
-                <div class="product-details">
+                <div v-if="showDetails[product._id]" class="product-details">
                     <p>{{ product.desc }}</p>
                 </div>
             </div>
@@ -29,13 +29,19 @@ export default {
         products: Array
     },
 
+    data() {
+        return {
+            showDetails: {},
+        };
+    },
+
     methods: {
         editProduct(product) {
-            this.$router.push({ name: 'product-form', params: { id: product._id } });
+            this.$router.push({ name: "product-form", params: { id: product} });
         },
 
-        async deleteProduct(productId) {
-            if (confirm("Do you want to remove this product")) {
+        async deleteProduct(productId, producTitle) {
+            if (confirm(`Do you want to remove this product ${producTitle}`)) {
                 try {   
                     const response = await ProductService.deleteProduct(productId)
                     console.log(response)
@@ -50,6 +56,11 @@ export default {
             } else {
                 return false; // Prevent page reload
             }
+        },
+
+        toggleProductDetails(productId) {
+        // Toggle the display of product details for the clicked product
+            this.$set(this.showDetails, productId, !this.showDetails[productId]);
         },
     }
 }
@@ -116,6 +127,17 @@ export default {
         font-size: 18px;
         margin: 15px;
         width: 300px;
+    }
+
+    .fa-pen,
+    .fa-trash{
+        border: 1px solid var(--black);
+        padding: 10px;
+        color: var(--white);
+        background-color: var(--black);
+        width: 80px;
+        text-align: center;
+        border-radius: 10px;
     }
 
     .fa-pen:hover,

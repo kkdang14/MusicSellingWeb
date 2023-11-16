@@ -64,7 +64,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url("../../public/image/background_login.jpg") no-repeat center;
+    /* background: url("../../public/image/background_login.jpg") no-repeat center; */
     background-size: cover;
 }
 

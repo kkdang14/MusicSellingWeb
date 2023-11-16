@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 const generateAuthToken = (user) => {
-    const token = jwt.sign({ _id: user._id, role: user.role }, 'your_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ _id: user._id, cart: user.cart, favorite: user.favorite, role: user.role }, 'your_secret_key', { expiresIn: '1h' });
     return token;
 };
 
@@ -27,7 +27,7 @@ const login = async (req, res) => {
         // If both username and password are valid, generate a token
         const token = generateAuthToken(user);
 
-        res.json({ token, user: { _id: user._id, username: user.username, role: user.role } });
+        res.json({ token, user: { _id: user._id, username: user.username, cart: user.cart, favorite: user.favorite, role: user.role } });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

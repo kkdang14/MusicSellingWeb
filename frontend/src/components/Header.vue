@@ -30,7 +30,7 @@
                 :show-popover="isUserPopoverVisible"
                 :current-user="currentUser"
                 @logout="logout"
-                @close="closePopover"
+                @mouseleave="closePopover"
             />
         </nav>
     </div>
@@ -78,7 +78,7 @@ export default {
         },
         closePopover() {
       // Close the popover
-        this.isUserPopoverVisible = !this.isUserPopoverVisible;
+            this.isUserPopoverVisible = !this.isUserPopoverVisible;
         },
     },
 };

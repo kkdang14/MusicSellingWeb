@@ -4,17 +4,17 @@
         <div class="product-list__category">
             <div class="container">
                 <div v-for="product in products" :key="product._id">
-                    <div class="item" v-if="product.category === 'Album'">
-                        <router-link :to="{ name: 'product-detail', params: { id: product._id } }" class="img">
+                    <router-link :to="{ name: 'product-detail', params: { id: product._id } }" class="item" v-if="product.category === 'Album'">
+                        <div class="img">
                             <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
-                        </router-link>
+                        </div>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
                             <div class="price">$ {{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
                             <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>

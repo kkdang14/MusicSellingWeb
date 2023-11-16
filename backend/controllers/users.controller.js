@@ -45,6 +45,17 @@ const updateOne = asyncHandler(async (req, res) => {
     }
 })
 
+const updateFavorite = asyncHandler(async (req, res) => {
+    try {
+        // Assuming you have a method in your UserService to update favorites
+        const response = await UserService.updateFavorites(req.params.id, req.body.favorite);
+        res.status(200).json({ message: 'Favorites updated successfully', response});
+    } catch (error) {
+        console.error('Error updating favorites:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
 const deleteOne = asyncHandler(async (req, res) => {
     try {
         const user = await Users.findByIdAndDelete(req.params.id, req.body)
@@ -67,16 +78,6 @@ const deleteAll = asyncHandler(async (req, res) => {
     }
 })
 
-const getClient = asyncHandler(async (req, res) => {
-    try {
-        const user = await Users.find({ role: "client" });
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500);
-        throw new Error(error.message)
-    }
-})
-
 module.exports = {
     createUser,
     getAll,
@@ -84,5 +85,5 @@ module.exports = {
     updateOne,
     deleteOne,
     deleteAll,
-    getClient
+    updateFavorite
 }

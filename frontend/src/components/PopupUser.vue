@@ -22,7 +22,7 @@ export default {
     },
 
     watch: {
-        showPopover: function (newValue) {
+        showPopover(newValue) {
             if (newValue) {
                 // Add a click event listener to the document when the popover is shown
                 document.addEventListener('click', this.closePopover);
@@ -37,7 +37,6 @@ export default {
         logout() {
             this.$emit('logout');
         },
-
     },
 
     // mounted() {

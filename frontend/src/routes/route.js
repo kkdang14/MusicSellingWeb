@@ -69,7 +69,7 @@ const routes = [
             },
 
             {
-                path: "product-form",
+                path: "product-form/:id",
                 name: "product-form",
                 component: () => import("../components/ProductForm.vue"),
             },
