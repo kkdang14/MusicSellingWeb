@@ -10,7 +10,7 @@
                         </div>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
-                            <div class="price">$ {{ product.price }}</div>
+                            <div class="price">${{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
                             <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
@@ -28,7 +28,7 @@
                         </router-link>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
-                            <div class="price">$ {{ product.price }}</div>
+                            <div class="price">${{ product.price }}</div>
                             <button class="add-to-cart">Add to Cart</button>
                             <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
@@ -44,19 +44,6 @@ export default {
     props: {
         products: Array, 
     },
-
-    // created() {
-    //     this.getImageUrl();
-    // },
-    
-
-
-    methods: {
-        // getImageUrl(imageName) {
-        //     // Replace this with the actual base image URL from your server
-        //     return `http://localhost:3000/uploads/images/${imageName}`;
-        // },
-    }
 };
 </script>
 
@@ -119,14 +106,14 @@ export default {
 .img {
     margin-top: 5px;
     width: 200px;
-    /* height: 200; */
     border: 2px solid black;
+    border-radius: 8px;
 }
 
 .img img {
     width: 100%;
     height: 200px;
-    /* object-fit: contain; */
+    border-radius: 6px;
 }
 
 .details {
@@ -144,19 +131,18 @@ export default {
     color: var(--black);
 }
 
-.add-to-cart,
-.buy-now {
+.add-to-cart{
     background-color: #000;
     color: #fff;
     border: none;
+    border-radius: 8px;
     margin: 5px;
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
-.add-to-cart:hover,
-.buy-now:hover {
+.add-to-cart:hover{
     background-color: rgb(71, 69, 69);
 }
 </style>

@@ -28,14 +28,14 @@ class UserService {
         }
     }
 
-    async getUserClient() {
-        try {
-            const response = await this.apiClient.get('/getUser')
-            response.data;
-        } catch (error) {
-            throw error
-        }
-    }
+    // async getFavorite(favorite) {
+    //     try {
+    //         const response = await this.apiClient.get('/', { favorite });
+    //         return response.data;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
 
     async getUserById(userId) {
         try {

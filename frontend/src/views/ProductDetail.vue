@@ -27,6 +27,9 @@
 import ProductsService from '../services/products.service';
 import UserService from '../services/users.service'
 
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 export default {
     data() {
         return {
@@ -83,9 +86,13 @@ export default {
 
                     // Update the local storage
                     localStorage.setItem('user', JSON.stringify(userData));
-
                     // Update the component's isFavorite state
                     this.isFavorite = !this.isFavorite;
+                }
+                if (this.isFavorite === true) {
+                    toast.success('A product has been added to favorite', {
+                        autoClose: 800
+                    })
                 }
             } catch (error) {
                 console.log(error);
@@ -99,25 +106,29 @@ export default {
     .product-detail{
         display: flex;
         justify-content: center;
-        background: var(--white);
     }
 
     .product-info{
+        margin: 10px;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
         align-items: center;
         width: 70%;
         height: 500px;
+        background-color: var(--color-bg);
+        border-radius: 8px;
     }
 
     .img{
         height: 70%;
         border: 1px solid #000;
-        margin: 10px;
+        border-radius: 8px;
+        padding: 10px;
     }
 
     .details{
-        margin: 10px;
+        width: 50%;
+        height: auto;
     }
 
     .price{
