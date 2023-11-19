@@ -83,6 +83,7 @@ const updateOne = asyncHandler(async (req, res) =>{
     }
 })
 
+
 const deleteOne = asyncHandler(async (req, res) =>{
     try {
         const product = await Products.findByIdAndDelete(req.params.id, req.body)
@@ -123,5 +124,5 @@ module.exports = {
     getOne,
     updateOne,
     deleteOne,
-    deleteAll
+    deleteAll,
 } 

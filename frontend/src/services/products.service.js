@@ -58,6 +58,30 @@ class ProductService {
             throw error;
         }
     }
+
+    async updateProductQuantity(productId, quantity) {
+        try {
+            const response = await axios.put(`/${productId}`, {
+                quantity: quantity,
+            });
+
+            // Update local storage if the server request is successful
+            const user = localStorage.getItem("user");
+            if (user) {
+                const userData = JSON.parse(user);
+                const cartItem = userData.cart.find((item) => item.productId === productId);
+                if (cartItem) {
+                    cartItem.quantity = quantity;
+                    localStorage.setItem("user", JSON.stringify(userData));
+                }
+            }
+
+            return response.data;
+        } catch (error) {
+            console.error("Error updating product quantity:", error);
+            throw error;
+        }
+    }
 }
 
 export default new ProductService();

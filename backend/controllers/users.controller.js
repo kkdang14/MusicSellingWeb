@@ -56,17 +56,45 @@ const updateFavorite = asyncHandler(async (req, res) => {
     }
 })
 
-// const getFavorite = asyncHandler(async (req, res) => {
-//     try {
-//         // Assuming you have a method in your UserService to retrieve user favorites
-//         const user = await Users.find({ favorite })
-    
-//         res.status(200).json({ favorite: user.favorite || [] });
-//     } catch (error) {
-//         console.error('Error retrieving favorites:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// })
+const updateCart = asyncHandler(async (req, res) => {
+    try {
+        // Assuming you have a method in your UserService to update favorites
+        const response = await Users.findByIdAndUpdate(req.params.id, req.body.cart);
+        res.status(200).json({ message: 'Cart updated successfully', response });
+    } catch (error) {
+        console.error('Error updating cart:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+const updateProductQuantity =  async (req, res) => {
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+    const { quantity } = req.body;
+
+    try {
+        const user = await Users.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const cartItem = user.cart.find((item) => item.productId.toString() === productId);
+        if (!cartItem) {
+            return res.status(404).json({ error: 'Product not found in user\'s cart' });
+        }
+
+        cartItem.quantity = quantity;
+        await user.save();
+
+        res.status(200).json({ message: "Quantity updated in user's cart", user });
+    } catch (error) {
+        console.error('Error updating product quantity in user\'s cart:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
 
 const deleteOne = asyncHandler(async (req, res) => {
     try {
@@ -98,4 +126,6 @@ module.exports = {
     deleteOne,
     deleteAll,
     updateFavorite,
+    updateCart,
+    updateProductQuantity
 }

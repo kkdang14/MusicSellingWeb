@@ -124,10 +124,10 @@ export default {
                 this.$router.push({ name: "product-management" });
             } catch (error) {
                 console.log(error);
-            }
+            }   
         },
     },
-};
+};   
 </script>
 
 <style scoped>

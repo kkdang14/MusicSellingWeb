@@ -15,8 +15,14 @@
                     ></i>
                 </div>
                 <div class="add-to-cart">
-                    <div class="quantity">Quantity</div>
-                    <button class="btn" @click="addToCart">Add to Cart</button>
+                    <div class="quantity">
+                        <div>
+                            <button @click="decrementQuantity">-</button>
+                            <input v-model="quantity" type="number" min="1" />
+                            <button @click="incrementQuantity">+</button>
+                        </div>
+                    </div>
+                    <button class="btn" @click="toggleCart">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -30,11 +36,15 @@ import UserService from '../services/users.service'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
+
+
 export default {
     data() {
         return {
             product: '',
             isFavorite: false,
+            isCart: false,
+            quantity: 1
         };
     },
     created() {
@@ -47,10 +57,24 @@ export default {
                 this.product = await ProductsService.getProductById(productId)
                 console.log(this.product)
                 this.checkFavoriteStatus()
+                // this.checkCartStatus()
             } catch (error) {
                 console.log(error)
             }
         },
+
+        // checkCartStatus() {
+        //     // Check if the current product is in the user's favorites
+        //     try {
+        //         const user = localStorage.getItem('user');
+        //         if (user) {
+        //             const userData = JSON.parse(user);
+        //             this.isCart = userData.cart.includes(this.product._id);
+        //         } 
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // },
 
         checkFavoriteStatus() {
             // Check if the current product is in the user's favorites
@@ -88,6 +112,9 @@ export default {
                     localStorage.setItem('user', JSON.stringify(userData));
                     // Update the component's isFavorite state
                     this.isFavorite = !this.isFavorite;
+                } else {
+                    alert("You have to login!")
+                    this.$router.push({name: 'login'})
                 }
                 if (this.isFavorite === true) {
                     toast.success('A product has been added to favorite', {
@@ -96,6 +123,57 @@ export default {
                 }
             } catch (error) {
                 console.log(error);
+            }
+        },
+
+        async toggleCart() {
+            // Toggle the favorite status
+            try {
+                const user = localStorage.getItem('user');
+                if (user) {
+                    const userData = JSON.parse(user);
+
+                    // Find the index of the product in the cart
+                    const index = userData.cart.findIndex(item => item.productId === this.product._id);
+
+                    if (index !== -1) {
+                        // If the product is already in the cart, increase the quantity
+                        userData.cart[index].quantity += this.quantity;
+                    } else {
+                        // If the product is not in the cart, add it with the given quantity
+                        userData.cart.push({ productId: this.product._id, quantity: this.quantity });
+                    }
+
+                    // Update the user's cart
+                    // You need an appropriate API endpoint to handle this update
+                    await UserService.updateCart(userData._id, userData.cart);
+
+                    // Update the local storage
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                    // Display a confirmation message
+                    // toast.success('Product added to cart', {
+                    //     autoClose: 500
+                    // });
+                    setTimeout(() => {
+                        this.$router.go();
+                    }, 0);
+                }else {
+                    alert("You have to login!")
+                    this.$router.push({name: 'login'})
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        
+
+        incrementQuantity() {
+            this.quantity += 1;
+        },
+        decrementQuantity() {
+            if (this.quantity > 1) {
+                this.quantity -= 1;
             }
         },
     }
@@ -120,7 +198,8 @@ export default {
     }
 
     .img{
-        height: 70%;
+        height: fit-content;
+        width: 40%;
         border: 1px solid #000;
         border-radius: 8px;
         padding: 10px;
@@ -150,8 +229,44 @@ export default {
         font-weight: 500;
     }
 
+    .quantity {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+    }
+
+    .quantity input {
+        width: 40px;
+        text-align: center;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px;
+    }
+
+    .quantity button {
+        background-color: var(--black);
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .quantity button:hover {
+        background-color: var(--black-hover)
+    }
+
     .btn:hover{
         background-color: var(--black);
         color: var(--white);
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>

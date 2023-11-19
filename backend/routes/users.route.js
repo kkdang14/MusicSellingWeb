@@ -10,6 +10,8 @@ router.put('/:id', users.updateOne)
 router.delete('/:id', users.deleteOne)
 router.delete('/', users.deleteAll)
 router.put('/:id', users.updateFavorite)
+router.put('/:id', users.updateCart)
+router.put('/:id', users.updateProductQuantity)
 
 router.post('/login', auth.login)
 

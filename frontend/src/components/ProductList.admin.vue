@@ -53,15 +53,16 @@ export default {
                 } catch (error) {
                     console.log(error)
                 }
+                this.$router.go()
             } else {
                 return false; // Prevent page reload
             }
         },
 
-        toggleProductDetails(productId) {
-        // Toggle the display of product details for the clicked product
-            this.$set(this.showDetails, productId, !this.showDetails[productId]);
-        },
+        // toggleProductDetails(productId) {
+        // // Toggle the display of product details for the clicked product
+        //     this.$set(this.showDetails, productId, !this.showDetails[productId]);
+        // },
     }
 }
 </script>
@@ -111,9 +112,11 @@ export default {
     .product-item{
         display: flex;
         justify-content: space-around;
-        border-bottom: 1px solid var(--black);
+        border: 2px solid var(--black);
+        border-radius: 8px;
         align-items: center;
         padding: 10px;
+        margin-bottom: 2px;
     }
 
     .img{

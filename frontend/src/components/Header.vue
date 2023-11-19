@@ -7,14 +7,12 @@
                 <router-link to="/shopping" class="nav-bar__item">Shopping</router-link>
             </div>
             <div class="other">
-                <!-- <router-link to="/admin" class="admin">
-                    <i class="fa-solid fa-user-gear"></i>
-                </router-link> -->
                 <router-link to="/favorite" class="favorite">
                     <i class="fa-solid fa-heart"></i>
                 </router-link>
                 <router-link to="/cart" class="cart">
                     <i class="fa-solid fa-cart-shopping"></i>
+                    <span v-if="updateCartCount" class="cart-count">({{ countCart }})</span>
                 </router-link>
                 <template v-if="!isLoggedIn">
                     <router-link to="/login" class="login">Login</router-link>
@@ -52,7 +50,12 @@ export default {
     data() {
         return {
             isUserPopoverVisible: false,
+            countCart: 0
         }
+    },
+
+    created() {
+        this.updateCartCount();
     },
 
     computed: {
@@ -63,6 +66,14 @@ export default {
         currentUser() {
             return JSON.parse(localStorage.getItem('user'));
         },
+
+        // cart() {
+        //     const user = JSON.parse(localStorage.getItem('user'));
+        //     return user ? user.cart : [];
+        // },
+        //     countCart() {
+        //     return this.cart.length
+        // },
     },
     methods: {
         togglePopover() {
@@ -76,6 +87,17 @@ export default {
             // Redirect to the home page or any desired route after logout
             this.$router.push({name: 'login'});
         },
+
+        updateCartCount() {
+            const user = localStorage.getItem('user');
+            if (user) {
+                const userData = JSON.parse(user);
+                this.countCart = userData.cart.length;
+            } else {
+                this.countCart = 0;
+        }
+        },
+
         closePopover() {
       // Close the popover
             this.isUserPopoverVisible = !this.isUserPopoverVisible;
@@ -146,7 +168,6 @@ export default {
 
 .favorite,
 .cart,
-.admin,
 .profile,
 .login {
     margin: 10px;
@@ -159,10 +180,19 @@ export default {
 
 .favorite:hover,
 .cart:hover,
-.admin:hover,
 .logout:hover,
 .login:hover {
     color: var(--black-hover);
     font-weight: 600;
+}
+
+.cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-count{
+    font-size: 18px;
 }
 </style>
