@@ -1,48 +1,54 @@
 <template>
     <div class="cart">
-        <h1>CART</h1>
-        <div class="title">
-            <div class="check-all">
-                <input class="checkbox" type="checkbox" name="" id="" />
+        <div class="check-in">
+            <h1>CART</h1>
+            <div class="title">
+                <div class="check-all">
+                    <input class="checkbox" type="checkbox" name="" id="" />
+                </div>
+                <div class="product">Product</div>
+                <div class="unit-price">Unit price</div>
+                <div class="amount">Quantity</div>
+                <div class="money">Final Price</div>
+                <div class="del">Delete</div>
             </div>
-            <div class="product">Product</div>
-            <div class="unit-price">Unit price</div>
-            <div class="amount">Quantity</div>
-            <div class="money">Amount of money</div>
-            <div class="del">Delete</div>
-        </div>
-        <div v-if="products.length === 0">You have no product in cart.</div>
-        <div class="container">
-            <div v-for="product in products" :key="product._id" class="cart-item">
-                <div class="item">
-                    <div class="check-product">
-                        <input class="checkbox" type="checkbox" name="" id="" />
-                    </div>
-                    <img class="img" :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
-                    <div class="info">
-                        {{ product.category }} {{ product.title }} - {{ product.artist }}
-                    </div>
-                    <div class="price">${{ product.price }}</div>
-                    <div class="quantity">
-                        <div>
-                            <button @click="decrementQuantity(product)">-</button>
-                            <input v-model="product.quantity" type="number" min="1" />
-                            <button @click="incrementQuantity(product)">+</button>
+            <div v-if="products.length === 0">You have no product in cart.</div>
+            <div class="container">
+                <div v-for="product in products" :key="product._id" class="cart-item">
+                    <div class="item">
+                        <div class="check-product">
+                            <input class="checkbox" type="checkbox" name="" id="" />
                         </div>
+                        <img class="img" :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
+                        <div class="info">
+                            {{ product.category }} {{ product.title }}
+                        </div>
+                        <div class="price">${{ product.price }}</div>
+                        <div class="quantity">
+                            <div>
+                                <button @click="decrementQuantity(product)">-</button>
+                                <input v-model="product.quantity" type="number" min="1" />
+                                <button @click="incrementQuantity(product)">+</button>
+                            </div>
+                        </div>
+                        <div class="sum-money">{{ calculatePrice(product) }}</div>
+                        <i class="fa-solid fa-trash" @click="deleteProduct(product._id, product.title)"></i>
                     </div>
-                    <div class="sum-money">{{ calculatePrice(product) }}</div>
-                    <i class="fa-solid fa-trash" @click="deleteProduct(product._id, product.title)"></i>
                 </div>
             </div>
         </div>
-        <div class="to-order">ORDER</div>
+        <check-out></check-out>
     </div>
 </template>
 
 <script>
 import UserService from "../services/users.service";
-import ProductsService from "../services/products.service";
+import ProductService from "../services/products.service";
+import CheckOut from "../components/CheckOut.vue"
 export default {
+    components: {
+        CheckOut  
+    },
     data() {
         return {
             products: [],
@@ -68,7 +74,7 @@ export default {
         async fetchCartProducts(cart) {
             return await Promise.all(
                 cart.map(async (item) => {
-                    const product = await ProductsService.getProductById(item.productId);
+                    const product = await ProductService.getProductById(item.productId);
                     if (product) {
                         product.quantity = item.quantity;
                     }
@@ -105,10 +111,10 @@ export default {
                     const cartItem = userData.cart.find((item) => item.productId === product._id);
                     if (cartItem) {
                         // Update the quantity on the server
-                        await UserService.updateProductQuantity(userData._id ,product._id, product.quantity);
-
                         // Update the local storage
                         cartItem.quantity = product.quantity;
+
+                        await UserService.updateCart(userData._id , userData.cart);
                         localStorage.setItem("user", JSON.stringify(userData));
                     }
                 }
@@ -125,8 +131,10 @@ export default {
                         const userData = JSON.parse(user);
                         userData.cart = userData.cart.filter((item) => item.productId !== productId);
                         localStorage.setItem("user", JSON.stringify(userData));
+
+                        this.products = this.products.filter((product) => product._id !== productId);
+                        await UserService.deleteProductCart(userData._id, userData.cart);
                     }
-                    this.products = this.products.filter((product) => product._id !== productId);
                 } catch (error) {
                     console.error(error);
                 }
@@ -143,22 +151,20 @@ export default {
 </script>
 
 <style scoped>
+
 .cart {
-    text-align: center;
-    padding: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-height:max-content;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 50px;
+    height: 630px;
 }
 
 .title {
     display: flex;
-    border: 2px solid var(--black);
-    width: 80%;
+    /* border: 2px solid var(--black); */
+    width: 100%;
     align-items: center;
-    /* justify-content: space-around; */
     font-weight: 500;
     padding: 8px;
     margin-bottom: 2px;
@@ -170,47 +176,46 @@ export default {
 }
 
 .check-all {
-    margin-left: 52px;
+    margin-left: 38px;
 }
 
 .product {
-    margin-left: 70px;
+    margin-left: 50px;
 }
 
 .unit-price {
-    margin-left: 410px;
+    margin-left: 350px;
 }
 
 .amount {
-    margin-left: 55px;
-}
-
-.money {
     margin-left: 70px;
 }
 
-.del {
-    margin-left: 20px;
+.money {
+    margin-left: 60px;
 }
 
+.del {
+    margin-left: 35px;
+}
 .container {
     display: flex;
-    width: 80%;
+    width: 1000px;
     flex-wrap: nowrap;
     flex-direction: column;
     margin-top: 20px;
     overflow-y: scroll;
-    max-height: 400px;
+    max-height: 500px;
 }
 
 .item {
     display: flex;
     justify-content: space-around;
-    border: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
     align-items: center;
     padding: 10px;
     margin-bottom: 2px;
-    border-radius: 8px;
+    /* border-radius: 8px; */
 }
 
 .img {
@@ -281,10 +286,6 @@ input::-webkit-inner-spin-button {
     border-radius: 10px;
     }
 
-/* .check-product {
-    display: none;
-} */
-
 .checkbox {
     width: 16px;
     height: 16px;
@@ -295,9 +296,4 @@ input::-webkit-inner-spin-button {
     accent-color: var(--black);
 }
 
-.to-order{
-    width: 80%;
-    height: 200px;
-    border: 2px solid var(--black);
-}
 </style>

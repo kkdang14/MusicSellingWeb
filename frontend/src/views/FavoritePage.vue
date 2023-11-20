@@ -19,7 +19,7 @@
 
 <script>
 import UserService from "../services/users.service";
-import ProductsService from "../services/products.service";
+import ProductService from "../services/products.service";
 export default {
     data() {
         return {
@@ -38,7 +38,7 @@ export default {
                     const favoriteProductIds = userData.favorite; // Assuming these are product IDs
                     const favoriteProducts = await Promise.all(
                         favoriteProductIds.map(async (productId) => {
-                            return await ProductsService.getProductById(productId);
+                            return await ProductService.getProductById(productId);
                         })
                     );
                     console.log(this.products);

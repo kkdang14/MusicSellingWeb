@@ -26,11 +26,26 @@
                 </div>
             </div>
         </div>
+        <div class="similar-product">
+            <h2>Similar Products</h2>
+            <div class="container">
+                <div v-for="similarProduct in similarProducts" :key="similarProduct._id" class="favorite-item">
+                <!-- Display product details here -->
+                    <router-link :to="{ name: 'product-detail', params: { id: similarProduct._id } }" class="item">
+                        <img :src="'http://localhost:3000/uploads/' + similarProduct.image" alt="Product Image" />
+                        <h2 v-if="similarProduct.category === 'Album'">Album {{ similarProduct.title }}</h2>
+                        <h2 v-else>EP {{ similarProduct.title }}</h2>
+                        <p>{{ similarProduct.artist }}</p>
+                    </router-link>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import ProductsService from '../services/products.service';
+import ProductService from '../services/products.service';
 import UserService from '../services/users.service'
 
 import { toast } from 'vue3-toastify';
@@ -44,17 +59,19 @@ export default {
             product: '',
             isFavorite: false,
             isCart: false,
-            quantity: 1
+            quantity: 1,
+            similarProducts: [],
         };
     },
     created() {
         this.retrieveProduct();
+        this.retrieveProductAll();
     },
     methods: {
         async retrieveProduct() {
             try {
                 const productId = this.$route.params.id;
-                this.product = await ProductsService.getProductById(productId)
+                this.product = await ProductService.getProductById(productId)
                 console.log(this.product)
                 this.checkFavoriteStatus()
                 // this.checkCartStatus()
@@ -62,6 +79,16 @@ export default {
                 console.log(error)
             }
         },
+
+        async retrieveProductAll() {
+            try{
+                this.similarProducts = await ProductService.getAllProducts()
+                console.log(this.similarProducts)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
 
         // checkCartStatus() {
         //     // Check if the current product is in the user's favorites
@@ -184,6 +211,8 @@ export default {
     .product-detail{
         display: flex;
         justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 
     .product-info{
@@ -268,5 +297,22 @@ export default {
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
+    }
+
+    .similar-product{
+        background-color: var(--color-bg);
+        width: 70%;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    .container{
+        width: 100%;
+        overflow-x: scroll; /* Add this line to enable vertical scrollbar */
+        height: 300px;
     }
 </style>

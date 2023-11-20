@@ -67,33 +67,29 @@ const updateCart = asyncHandler(async (req, res) => {
     }
 });
 
-const updateProductQuantity =  async (req, res) => {
-    const userId = req.params.userId;
-    const productId = req.params.productId;
-    const { quantity } = req.body;
-
+const deleteProductFromCart = asyncHandler(async (req, res) => {
     try {
+        const userId = req.params.id;
+        const productIdToDelete = req.params.productId;
+
         const user = await Users.findById(userId);
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        const cartItem = user.cart.find((item) => item.productId.toString() === productId);
-        if (!cartItem) {
-            return res.status(404).json({ error: 'Product not found in user\'s cart' });
-        }
+        // Filter out the product to be deleted from the user's cart
+        user.cart = user.cart.filter((item) => item.productId.toString() !== productIdToDelete);
 
-        cartItem.quantity = quantity;
-        await user.save();
+        // Update the user document in the database
+        const response = await Users.findByIdAndUpdate(userId, { cart: user.cart });
 
-        res.status(200).json({ message: "Quantity updated in user's cart", user });
+        res.status(200).json({ message: 'Product deleted from cart successfully', response });
     } catch (error) {
-        console.error('Error updating product quantity in user\'s cart:', error);
+        console.error('Error deleting product from cart:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-}
-
+});
 
 
 const deleteOne = asyncHandler(async (req, res) => {
@@ -127,5 +123,5 @@ module.exports = {
     deleteAll,
     updateFavorite,
     updateCart,
-    updateProductQuantity
+    deleteProductFromCart
 }

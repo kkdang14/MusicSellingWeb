@@ -73,6 +73,15 @@ class UserService {
         }
     }
 
+    async deleteProductCart(userId, cart) {
+        try {
+            const response = await this.apiClient.put(`/${userId}`, { cart });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async deleteUser(userId) {
         try {
             const response = await this.apiClient.delete(`/${userId}`);
@@ -82,7 +91,7 @@ class UserService {
         }
     }
 
-    async updateProductQuantity(userId, productId, quantity) {
+    async updateProductQuantity(userId, cart) {
         try {
             const response = await this.apiClient.put(`/${userId}`, { productId: productId, 
                 quantity: quantity,

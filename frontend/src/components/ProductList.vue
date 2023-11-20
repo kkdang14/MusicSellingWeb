@@ -4,17 +4,18 @@
         <div class="product-list__category">
             <div class="container">
                 <div v-for="product in products" :key="product._id">
-                    <router-link :to="{ name: 'product-detail', params: { id: product._id } }" class="item" v-if="product.category === 'Album'">
-                        <div class="img">
+                    <div class="item" v-if="product.category === 'Album'">
+                        <router-link :to="{ name: 'product-detail', params: { id: product._id } }"  class="img">
                             <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
-                        </div>
+                        </router-link>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
+                            <p class="artist">{{ product.artist }}</p>
                             <div class="price">${{ product.price }}</div>
-                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="add-to-cart" @click="toggleCart(product._id)">Add to Cart</button>
                             <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
-                    </router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,9 +28,10 @@
                             <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
                         </router-link>
                         <div class="details">
-                            <div class="name">{{ product.title }}</div>
+                            <div class="name">{{ product.title }} </div>
+                            <p class="artist">{{ product.artist }}</p>
                             <div class="price">${{ product.price }}</div>
-                            <button class="add-to-cart">Add to Cart</button>
+                            <button class="add-to-cart" @click="toggleCart(product._id)">Add to Cart</button>
                             <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
                         </div>
                     </div>
@@ -40,10 +42,59 @@
 </template>
 
 <script>
+import UserService from '../services/users.service'
 export default {
     props: {
         products: Array, 
     },
+
+    data(){
+        return {
+            quantity: 1,
+        }
+    },
+    methods: {
+        async toggleCart(Id) {
+            // Toggle the favorite status
+            try {
+                const user = localStorage.getItem('user');
+                if (user) {
+                    const userData = JSON.parse(user);
+
+                    // Find the index of the product in the cart
+                    const index = userData.cart.findIndex(item => item.productId === Id);
+
+                    if (index !== -1) {
+                        // If the product is already in the cart, increase the quantity
+                        userData.cart[index].quantity += this.quantity;
+                    } else {
+                        // If the product is not in the cart, add it with the given quantity
+                        userData.cart.push({ productId: Id, quantity: this.quantity });
+                    }
+
+                    // Update the user's cart
+                    // You need an appropriate API endpoint to handle this update
+                    await UserService.updateCart(userData._id, userData.cart);
+
+                    // Update the local storage
+                    localStorage.setItem('user', JSON.stringify(userData));
+
+                    // Display a confirmation message
+                    // toast.success('Product added to cart', {
+                    //     autoClose: 500
+                    // });
+                    setTimeout(() => {
+                        this.$router.go();
+                    }, 0);
+                }else {
+                    alert("You have to login!")
+                    this.$router.push({name: 'login'})
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    }
 };
 </script>
 
@@ -63,7 +114,7 @@ export default {
     line-height: 50px;
     font-weight: 500;
     font-size: 25px;
-    width: 80%;
+    width: 90%;
 }
 
 .product-list__category {
@@ -74,7 +125,7 @@ export default {
     border-radius: 10px;
     margin: 20px 95px;
     padding: 10px;
-    width: calc(85% - 45px)
+    width: calc(90% - 10px)
 }
 
 .container {
@@ -88,8 +139,8 @@ export default {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 20px;
-    height: 350px;
-    width: 250px;
+    height: 375px;
+    width: 275px;
     border-radius: 10px;
     text-align: center;
     text-decoration: none;
@@ -104,7 +155,7 @@ export default {
 }
 
 .img {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 200px;
     border: 2px solid black;
     border-radius: 8px;
@@ -129,6 +180,10 @@ export default {
 .price {
     font-size: 1.2rem;
     color: var(--black);
+}
+
+.artist{
+    margin: 0;
 }
 
 .add-to-cart{
