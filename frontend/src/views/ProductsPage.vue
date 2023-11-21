@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         performSearch(searchText) {
-            this.searchText = searchText;
+            this.searchText = searchText.toLowerCase();
         },
 
         async retrieveProduct() {
@@ -44,7 +44,7 @@ export default {
             } finally {
                 this.loading = false;
             }
-    },
+        },
 
         normalizeText(text) {
             // Normalize text using the 'unorm' library
@@ -53,8 +53,8 @@ export default {
     },
     computed: {
         filteredProducts() {
-            const searchLower = this.normalizeText(this.searchText).toLowerCase(); // Convert search input to lowercase
-            return this.products.filter(product => product.title.includes(searchLower));
+            // const searchLower = this.normalizeText(this.searchText).toLowerCase(); // Convert search input to lowercase
+            return this.products.filter(product => product.title.includes(this.searchText));
         },
     },
 };

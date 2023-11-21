@@ -17,7 +17,7 @@
                 <div v-for="product in products" :key="product._id" class="cart-item">
                     <div class="item">
                         <div class="check-product">
-                            <input class="checkbox" type="checkbox" name="" id="" />
+                            <input class="checkbox" type="checkbox" name="" id=""  v-model="product.selected" />
                         </div>
                         <img class="img" :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
                         <div class="info">
@@ -31,13 +31,13 @@
                                 <button @click="incrementQuantity(product)">+</button>
                             </div>
                         </div>
-                        <div class="sum-money">{{ calculatePrice(product) }}</div>
+                        <div class="sum-money">${{ calculatePrice(product) }}</div>
                         <i class="fa-solid fa-trash" @click="deleteProduct(product._id, product.title)"></i>
                     </div>
                 </div>
             </div>
         </div>
-        <check-out></check-out>
+        <check-out :selectedProducts="selectedProducts" @checkout="proceedToCheckout"></check-out>
     </div>
 </template>
 
@@ -58,6 +58,14 @@ export default {
     created() {
         this.retrieveCart();
     },
+
+    computed: {
+        selectedProducts() {
+        // Filter selected products
+        return this.products.filter((product) => product.selected);
+        },
+    },
+
     methods: {
         async retrieveCart() {
             try {
@@ -145,7 +153,13 @@ export default {
         }, 
         calculatePrice(product) {
             return (product.price * product.quantity).toFixed(2)
-        }
+        },
+
+        async proceedToCheckout() {
+      // Filter selected products
+            const selectedProducts = this.products.filter(product => product.selected);
+            this.$emit('cart-updated', selectedProducts);
+        },
     },
 };
 </script>

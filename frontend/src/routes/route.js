@@ -43,7 +43,7 @@ const routes = [
             } else {
                 // Check if the user is an admin
                 const role = user.role;
-                if (role) {
+                if (role === 'admin') {
                     // Allow access for admin users
                     next()
                 } else {

@@ -131,6 +131,7 @@ export default {
     width: 100%;
     height: 70px;
     background-color: var(--black);
+    /* position: fixed; */
 }
 
 .nav-bar {

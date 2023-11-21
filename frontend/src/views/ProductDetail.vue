@@ -1,18 +1,15 @@
 <template>
     <div class="product-detail">
         <div class="product-info">
-            <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image"  class="img"/>
+            <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" class="img" />
             <div class="details">
-                <h2 v-if ="product.category === 'Album'"> Album {{ product.title }}</h2>
-                <h2 v-if ="product.category === 'EP'">EP {{ product.title }}</h2>
+                <h2 v-if="product.category === 'Album'"> Album {{ product.title }}</h2>
+                <h2 v-if="product.category === 'EP'">EP {{ product.title }}</h2>
                 <h4>{{ product.artist }}</h4>
                 <div class="price">${{ product.price }}</div>
                 <div class="desc">{{ product.desc }}</div>
                 <div class="favorite">
-                    <i 
-                        @click="toggleFavorite" 
-                        :class="isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
-                    ></i>
+                    <i @click="toggleFavorite" :class="isFavorite ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
                 </div>
                 <div class="add-to-cart">
                     <div class="quantity">
@@ -29,13 +26,13 @@
         <div class="similar-product">
             <h2>Similar Products</h2>
             <div class="container">
-                <div v-for="similarProduct in similarProducts" :key="similarProduct._id" class="favorite-item">
-                <!-- Display product details here -->
+                <div v-for="similarProduct in filteredSimilarProducts" :key="similarProduct._id" class="favorite-item">
+                    <!-- Display product details here -->
                     <router-link :to="{ name: 'product-detail', params: { id: similarProduct._id } }" class="item">
-                        <img :src="'http://localhost:3000/uploads/' + similarProduct.image" alt="Product Image" />
-                        <h2 v-if="similarProduct.category === 'Album'">Album {{ similarProduct.title }}</h2>
-                        <h2 v-else>EP {{ similarProduct.title }}</h2>
-                        <p>{{ similarProduct.artist }}</p>
+                        <img class="img-similar" :src="'http://localhost:3000/uploads/' + similarProduct.image"
+                            alt="Product Image" />
+                        <!-- <h2 v-if="similarProduct.category === 'Album'">Album {{ similarProduct.title }}</h2>
+                        <h2 v-else>EP {{ similarProduct.title }}</h2> -->
                     </router-link>
                     <!-- Add more details as needed -->
                 </div>
@@ -51,9 +48,13 @@ import UserService from '../services/users.service'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
-
+import { Carousel, Slide } from 'vue-carousel';
 
 export default {
+    components: {
+        Carousel,
+        Slide,
+    },
     data() {
         return {
             product: '',
@@ -63,9 +64,28 @@ export default {
             similarProducts: [],
         };
     },
+
+    watch: {
+        '$route.params.id'(newId) {
+            this.retrieveProduct(newId);
+            this.$router.go()
+        },
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.retrieveProduct(to.params.id);
+        next();
+    },
+
     created() {
         this.retrieveProduct();
         this.retrieveProductAll();
+    },
+
+    computed: {
+        filteredSimilarProducts() {
+            // Filter similarProducts based on the currentCategory
+            return this.similarProducts.filter(product => product.category === this.product.category && product._id !== this.product._id);
+        },
     },
     methods: {
         async retrieveProduct() {
@@ -81,27 +101,13 @@ export default {
         },
 
         async retrieveProductAll() {
-            try{
+            try {
                 this.similarProducts = await ProductService.getAllProducts()
                 console.log(this.similarProducts)
             } catch (error) {
                 console.log(error)
             }
         },
-
-
-        // checkCartStatus() {
-        //     // Check if the current product is in the user's favorites
-        //     try {
-        //         const user = localStorage.getItem('user');
-        //         if (user) {
-        //             const userData = JSON.parse(user);
-        //             this.isCart = userData.cart.includes(this.product._id);
-        //         } 
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
-        // },
 
         checkFavoriteStatus() {
             // Check if the current product is in the user's favorites
@@ -110,7 +116,7 @@ export default {
                 if (user) {
                     const userData = JSON.parse(user);
                     this.isFavorite = userData.favorite.includes(this.product._id);
-                } 
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -141,7 +147,7 @@ export default {
                     this.isFavorite = !this.isFavorite;
                 } else {
                     alert("You have to login!")
-                    this.$router.push({name: 'login'})
+                    this.$router.push({ name: 'login' })
                 }
                 if (this.isFavorite === true) {
                     toast.success('A product has been added to favorite', {
@@ -151,6 +157,10 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        gotoProduct() {
+            this.$router.go()
         },
 
         async toggleCart() {
@@ -185,15 +195,15 @@ export default {
                     setTimeout(() => {
                         this.$router.go();
                     }, 0);
-                }else {
+                } else {
                     alert("You have to login!")
-                    this.$router.push({name: 'login'})
+                    this.$router.push({ name: 'login' })
                 }
             } catch (error) {
                 console.log(error);
             }
         },
-        
+
 
         incrementQuantity() {
             this.quantity += 1;
@@ -208,111 +218,150 @@ export default {
 </script>
 
 <style scoped>
-    .product-detail{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
+.product-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-    .product-info{
-        margin: 10px;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 70%;
-        height: 500px;
-        background-color: var(--color-bg);
-        border-radius: 8px;
-    }
+.product-info {
+    margin: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    height: 500px;
+    background-color: var(--color-bg);
+    border-radius: 8px;
+}
 
-    .img{
-        height: fit-content;
-        width: 40%;
-        border: 1px solid #000;
-        border-radius: 8px;
-        padding: 10px;
-    }
+.img {
+    height: fit-content;
+    width: 40%;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 10px;
+}
 
-    .details{
-        width: 50%;
-        height: auto;
-    }
+.details {
+    width: 50%;
+    height: auto;
+}
 
-    .price{
-        font-size: 24px;
-        font-weight: 500;
-    }
+.price {
+    font-size: 24px;
+    font-weight: 500;
+}
 
-    .fa-heart{
-        font-size: 30px;
-        cursor: pointer;
-    }
+.fa-heart {
+    font-size: 30px;
+    cursor: pointer;
+}
 
-    .fa-solid{
-        color: var(--favorite);
-    }
+.fa-solid {
+    color: var(--favorite);
+}
 
-    .btn{
-        border: 2px solid var(--black);
-        font-weight: 500;
-    }
+.btn {
+    border: 2px solid var(--black);
+    font-weight: 500;
+}
 
-    .quantity {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        font-size: 16px;
-    }
+.quantity {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
 
-    .quantity input {
-        width: 40px;
-        text-align: center;
-        margin: 0 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 5px;
-    }
+.quantity input {
+    width: 40px;
+    text-align: center;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+}
 
-    .quantity button {
-        background-color: var(--black);
-        color: #fff;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+.quantity button {
+    background-color: var(--black);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-    .quantity button:hover {
-        background-color: var(--black-hover)
-    }
+.quantity button:hover {
+    background-color: var(--black-hover)
+}
 
-    .btn:hover{
-        background-color: var(--black);
-        color: var(--white);
-    }
+.btn:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
 
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
-    .similar-product{
-        background-color: var(--color-bg);
-        width: 70%;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: auto;
-    }
+.similar-product {
+    background-color: var(--color-bg);
+    width: 70%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* Add padding for spacing */
+    margin-top: 20px;
+    /* Add margin for separation from the product details */
+}
 
-    .container{
-        width: 100%;
-        overflow-x: scroll; /* Add this line to enable vertical scrollbar */
-        height: 300px;
-    }
+.similar-product h2{
+    margin-bottom: 15px;
+}
+
+.container {
+    width: 100%;
+    overflow-x: auto;
+    /* Add this line to enable horizontal scrollbar */
+    display: flex;
+    gap: 20px;
+    /* Adjust the gap between similar products */
+}
+
+.favorite-item {
+    flex: 0 0 auto;
+    /* Ensure items don't shrink */
+    position: relative;
+}
+
+.item {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+}
+
+.img-similar {
+    width: 100%;
+    height: 200px;
+    /* Adjust the height of the similar product images */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.img-similar:hover {
+    opacity: 0.8;
+    /* Add a hover effect for image transparency */
+}
+
+
 </style>
