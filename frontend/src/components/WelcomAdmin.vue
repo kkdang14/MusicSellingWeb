@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Welcom to Manegement Page, Admin</h1>
+        <h1>Welcome to Manegement Page, Admin</h1>
     </div>
 </template>
 
@@ -18,7 +18,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 90vh;
         width: 100%;
     }
 

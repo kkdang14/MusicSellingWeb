@@ -268,6 +268,11 @@ export default {
     font-weight: 500;
 }
 
+.btn:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
 .quantity {
     margin-bottom: 10px;
     display: flex;
@@ -298,10 +303,6 @@ export default {
     background-color: var(--black-hover)
 }
 
-.btn:hover {
-    background-color: var(--black);
-    color: var(--white);
-}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

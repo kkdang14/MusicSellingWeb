@@ -3,111 +3,78 @@
     <div class="register-page">
         <div class="container">
             <div class="register">Register</div>
-            <div >
+            <div>
                 <form @submit.prevent="register" class="form">
                     <div class="form-item">
                         <label class="label" for="firstname">Firstname</label><br />
                         <input 
-                            class="input" 
-                            type="text" 
-                            id="firstname" 
-                            placeholder="Firstname" 
-                            v-model="formData.firstname"
-                            />
+                        class="input" 
+                        type="text" 
+                        id="firstname" 
+                        placeholder="Firstname"
+                        :class="{ 'input-error': submitted && (!formData.firstname || usernameError), 'input-success': submitted && !usernameError }"
+                        v-model="formData.firstname" />
                     </div>
 
                     <div class="form-item">
                         <label class="label" for="lastname">Last name</label><br />
                         <input 
-                            class="input" 
-                            type="text" 
-                            id="lastname" 
-                            placeholder="Lastname" 
-                            v-model="formData.lastname"
-                            />
+                        class="input" 
+                        type="text" 
+                        id="lastname" 
+                        placeholder="Lastname" 
+                        :class="{ 'input-error': submitted && (!formData.username || usernameError), 'input-success': submitted && !usernameError }"
+                        v-model="formData.lastname" />
                     </div>
 
                     <div class="form-item">
                         <label class="label" for="username">Username</label><br />
-                        <input 
-                            class="input" 
-                            :class="{ 'input-error': submitted && usernameError, 'input-success': submitted && !usernameError }" 
-                            type="text" 
-                            id="username" 
-                            placeholder="Username" 
-                            v-model="formData.username"
-                            @input="validateUsername"
-                            />
-                            <span class="error-message" v-if="submitted && usernameError">{{ usernameError }}</span>
+                        <input class="input"
+                            :class="{ 'input-error': submitted && (!formData.username || usernameError), 'input-success': submitted && !usernameError }"
+                            type="text" id="username" placeholder="Username" v-model="formData.username"
+                            @input="validateUsername" />
+                        <span class="error-message" v-if="submitted && !formData.username">Username is required</span>
+                        <span class="error-message" v-if="submitted && usernameError">{{ usernameError }}</span>
                     </div>
-                    
+
                     <div class="form-item">
                         <label class="label" for="email">Email</label><br />
-                        <input 
-                            class="input"
-                            :class="{ 'input-error': submitted && emailError, 'input-success': submitted && !emailError }" 
-                            type="text" 
-                            id="email" 
-                            placeholder="Email" 
-                            v-model="formData.email"
-                            @input="validateEmail"
-                            />
-                            <span class="error-message" v-if="submitted &&  emailError">{{ emailError }}</span>
+                        <input class="input"
+                            :class="{ 'input-error': submitted && (!formData.email || emailError), 'input-success': submitted && !emailError }"
+                            type="text" id="email" placeholder="Email" v-model="formData.email" @input="validateEmail" />
+                        <span class="error-message" v-if="submitted && emailError">{{ emailError }}</span>
+                        <span class="error-message" v-if="submitted && !formData.email">Email is required</span>
                     </div>
-                    
+
                     <div class="form-item">
-                        <label class="label" for="password">Password</label><br/>
-                        <input 
-                            class="input"
+                        <label class="label" for="password">Password</label><br />
+                        <input class="input"
                             :class="{ 'input-error': submitted && passwordError, 'input-success': submitted && !passwordError }"
-                            :type="passwordFieldType"
-                            id="password" 
-                            placeholder="Password" 
-                            v-model="formData.password"
-                            @input="validatePassword"
-                        />
-                        <i v-if="formData.password" 
-                            class="icon-eye" 
-                            :class="[showPassword ? 'fa fa-eye-slash' : 'fa fa-eye']" 
-                            @click="togglePasswordVisibility"
-                        ></i>
+                            :type="passwordFieldType" id="password" placeholder="Password" v-model="formData.password"
+                            @input="validatePassword" />
+                        <i v-if="formData.password" class="icon-eye"
+                            :class="[showPassword ? 'fa fa-eye-slash' : 'fa fa-eye']" @click="togglePasswordVisibility"></i>
                         <span class="error-message" v-if="submitted && passwordError">{{ passwordError }}</span>
                     </div>
-                    
+
                     <div class="form-item">
                         <label class="label" for="password2">Confirm Password</label><br />
-                        <input 
-                        class="input"
-                        :class="{ 'input-error': submitted && confirmPasswordError, 'input-success': submitted && !confirmPasswordError }"
-                        :type="passwordFieldType"
-                        id="password2" 
-                        placeholder="Confirm Password" 
-                        v-model="formData.password2"
-                        @input="validateConfirmPassword"
-                        />
-                        <span class="error-message" v-if="submitted && confirmPasswordError">{{ confirmPasswordError }}</span>
+                        <input class="input"
+                            :class="{ 'input-error': submitted && confirmPasswordError, 'input-success': submitted && !confirmPasswordError }"
+                            :type="passwordFieldType" id="password2" placeholder="Confirm Password"
+                            v-model="formData.password2" @input="validateConfirmPassword" />
+                        <span class="error-message" v-if="submitted && confirmPasswordError">{{ confirmPasswordError
+                        }}</span>
                     </div>
 
                     <div class="form-item">
                         <label class="label" for="address">Address</label><br />
-                        <input 
-                            class="input" 
-                            type="text" 
-                            id="address" 
-                            placeholder="Address" 
-                            v-model="formData.address"
-                            />
+                        <input class="input" type="text" id="address" placeholder="Address" v-model="formData.address" />
                     </div>
 
                     <div class="form-item">
                         <label class="label" for="phone">Phone number</label><br />
-                        <input 
-                            class="input" 
-                            type="text" 
-                            id="phone" 
-                            placeholder="Phone number" 
-                            v-model="formData.phone"
-                            />
+                        <input class="input" type="text" id="phone" placeholder="Phone number" v-model="formData.phone" />
                     </div>
 
                     <div class="login">
@@ -159,7 +126,35 @@ export default {
         async register() {
             // this.submitted = true;
 
-            // if (this.usernameError || this.emailError || this.passwordError) {
+            // if (!this.formData.firstname) {
+            //     toast.error('Please enter your firstname', {
+            //         autoClose: 1000
+            //     });
+            //     return;
+            // }
+
+            // if (!this.formData.lastname) {
+            //     toast.error('Please enter your lastname', {
+            //         autoClose: 1000
+            //     });
+            //     return;
+            // }
+
+            // if (!this.formData.username) {
+            //     toast.error('Please enter a username', {
+            //         autoClose: 1000
+            //     });
+            //     return;
+            // }
+
+            // if (!this.formData.email) {
+            //     toast.error('Please enter your email', {
+            //         autoClose: 1000
+            //     });
+            //     return;
+            // }
+
+            // if (this.usernameError || this.emailError || this.passwordError || this.confirmPasswordError) {
             //     return;
             // }
 
@@ -181,21 +176,21 @@ export default {
             }
         },
 
-        // validateUsername() {
-        //     if (this.formData.username.length < 3) {
-        //         this.usernameError = "Username must be at least 3 characters long";
-        //     } else {
-        //         this.usernameError = "";
-        //     }
-        // },
-        // validateEmail() {
-        //     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        //     if (!emailPattern.test(this.formData.email)) {
-        //         this.emailError = "Invalid email format";
-        //     } else {
-        //         this.emailError = "";
-        //     }
-        // },
+        validateUsername() {
+            if (this.formData.username.length < 3) {
+                this.usernameError = "Username must be at least 3 characters long";
+            } else {
+                this.usernameError = "";
+            }
+        },
+        validateEmail() {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(this.formData.email)) {
+                this.emailError = "Invalid email format";
+            } else {
+                this.emailError = "";
+            }
+        },
 
         // validatePassword() {
         //     if (this.formData.password.length < 8) {
@@ -206,7 +201,10 @@ export default {
         // },
 
         // validateConfirmPassword() {
-        //     if (this.formData.password !== this.formData.confirmPassword) {
+        //     if (this.formData.password2.length < 8) {
+        //         this.confirmPasswordError = "Password must be at least 8 characters long";
+        //     }
+        //     else if (this.formData.password2 !== this.formData.password) {
         //         this.confirmPasswordError = "Passwords do not match";
         //     } else {
         //         this.confirmPasswordError = "";
@@ -250,15 +248,18 @@ export default {
     margin-top: 20px;
     width: 100%;
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next row */
-    justify-content: space-between; 
+    flex-wrap: wrap;
+    /* Allow items to wrap to the next row */
+    justify-content: space-between;
 }
 
 .form-item {
     box-sizing: border-box;
     padding: 10px;
-    width: 48%; /* Set width to 48% to fit two items in one row with a small gap */
-    margin-bottom: 10px; /* Add some space between form items */
+    width: 48%;
+    /* Set width to 48% to fit two items in one row with a small gap */
+    margin-bottom: 10px;
+    /* Add some space between form items */
     text-align: left;
 }
 
@@ -285,7 +286,8 @@ export default {
     margin-right: 30; */
     margin: 20px 60px auto auto;
     padding: 10px 20px;
-    width: 30%; /* Adjust the width as needed */
+    width: 30%;
+    /* Adjust the width as needed */
     background-color: var(--black);
     color: #fff;
     border: none;
@@ -308,10 +310,14 @@ export default {
 }
 
 .error-message {
-    color: red; /* Set the text color to red */
-    font-size: 14px; /* Define the font size */
-    margin-top: 5px; /* Add some spacing to separate error messages */
-    text-align: left; /* Align text to the left */
+    color: red;
+    /* Set the text color to red */
+    font-size: 14px;
+    /* Define the font size */
+    margin-top: 5px;
+    /* Add some spacing to separate error messages */
+    text-align: left;
+    /* Align text to the left */
 }
 
 .icon-eye {
@@ -335,5 +341,4 @@ export default {
 .login a:hover {
     text-decoration: underline;
 }
-
 </style>

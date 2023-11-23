@@ -4,6 +4,7 @@ const app = express();
 const dbConnection = require("./utils/db")
 const productRoute = require("./routes/products.route")
 const userRoute = require("./routes/users.route")
+const contactRoute = require("./routes/contact.route")
 const errorMiddleware = require("./middlewares/error")
 require("dotenv").config();
 
@@ -16,6 +17,7 @@ app.use('/uploads', express.static('uploads'));
 //routes
 app.use('/api/products', productRoute);
 app.use('/api/users', userRoute);
+app.use('/api/contacts', contactRoute);
 
 app.use(errorMiddleware);
 

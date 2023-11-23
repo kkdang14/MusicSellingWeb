@@ -48,8 +48,8 @@ const routes = [
                     next()
                 } else {
                     alert("Just admin can be access this page")
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
+                    // localStorage.removeItem('token');
+                    // localStorage.removeItem('user');
                     next('/')
                 }
             }

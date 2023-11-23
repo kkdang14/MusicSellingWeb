@@ -48,7 +48,7 @@ export default {
                 }, 1500);
             } catch (error) {
                 console.log(error)
-                toast.error('Error!', {
+                toast.error('Username or password is incorrect', {
                     autoClose: 800,
                 })
             }
@@ -75,8 +75,8 @@ export default {
     text-align: center;
     padding: 20px;
     margin-top: 10px;
-    /* background-color: #f5f5f5; */
-    background-color: transparent;
+    background-color: #f5f5f5;
+    /* background-color: transparent; */
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

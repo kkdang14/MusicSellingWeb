@@ -33,7 +33,7 @@
     padding: 30px 0px;
     font-family: 'Play', sans-serif;
     text-align: center;
-    height: 250px;
+    height: 320px;
 }
 
 .footer .icon{
@@ -42,23 +42,20 @@
 }
 
 .footer .icon .icon-item{
-    color: var(--black-hover);
+    color: var(--white);
     font-size: 30px;
     padding: 20px;
 }
 
 .icon .icon-item:hover{
-    color: var(--white);
     cursor: pointer;
 }
 
 .footer .row .row-item {
-    color: var(--black-hover);
-    transition: 0.5s;
+    color: var(--white);
 }
 
 .footer .row .row-item:hover {
-    color: var(--white);
     cursor: pointer;
 }
 
@@ -72,6 +69,6 @@
 }
 
 .footer .copyright{
-    color: var(--gray);
+    color: var(--black-hover);
 }
 </style>

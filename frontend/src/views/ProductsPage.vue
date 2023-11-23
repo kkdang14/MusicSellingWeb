@@ -3,8 +3,8 @@
         <Searching @search="performSearch"/>
         <div v-if="error">{{ error }}</div>
         <div v-if="loading"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
-        <p v-else-if="products == ''">Hiện chưa có sản phẩm nào được thêm vào</p>
-        <p v-else-if="filteredProducts.length === 0">Không tìm thấy sản phẩm phù hợp</p>
+        <p v-else-if="products == ''">There are currently no products added to the store</p>
+        <p v-else-if="filteredProducts.length === 0">No suitable products were found</p>
         <div class="product-area">
             <product-list :products="filteredProducts"/>
         </div>
@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         performSearch(searchText) {
-            this.searchText = searchText.toLowerCase();
+            this.searchText = searchText;
         },
 
         async retrieveProduct() {
@@ -47,14 +47,16 @@ export default {
         },
 
         normalizeText(text) {
-            // Normalize text using the 'unorm' library
             return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         },
     },
     computed: {
         filteredProducts() {
-            // const searchLower = this.normalizeText(this.searchText).toLowerCase(); // Convert search input to lowercase
-            return this.products.filter(product => product.title.includes(this.searchText));
+            const searchLower = this.normalizeText(this.searchText).toLowerCase();
+            return this.products.filter(product => {
+                const productTitleLower = this.normalizeText(product.title).toLowerCase();
+                return productTitleLower.includes(searchLower);
+            });
         },
     },
 };

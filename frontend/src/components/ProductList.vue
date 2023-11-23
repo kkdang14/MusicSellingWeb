@@ -5,15 +5,15 @@
             <div class="container">
                 <div v-for="product in products" :key="product._id">
                     <div class="item" v-if="product.category === 'Album'">
-                        <router-link :to="{ name: 'product-detail', params: { id: product._id } }"  class="img">
+                        <div :to="{ name: 'product-detail', params: { id: product._id } }"  class="img">
                             <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
-                        </router-link>
+                        </div>
                         <div class="details">
                             <div class="name">{{ product.title }}</div>
                             <p class="artist">{{ product.artist }}</p>
                             <div class="price">${{ product.price }}</div>
                             <button class="add-to-cart" @click="toggleCart(product._id)">Add to Cart</button>
-                            <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
+                            <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">See more</router-link>
                         </div>
                     </div>
                 </div>
@@ -24,15 +24,15 @@
             <div class="container">
                 <div v-for="product in products" :key="product._id">
                     <div class="item" v-if="product.category === 'EP'">
-                        <router-link :to="{ name: 'product-detail', params: { id: product._id } }" class="img">
+                        <div class="img">
                             <img :src="'http://localhost:3000/uploads/' + product.image" alt="Product Image" />
-                        </router-link>
+                        </div>
                         <div class="details">
                             <div class="name">{{ product.title }} </div>
                             <p class="artist">{{ product.artist }}</p>
                             <div class="price">${{ product.price }}</div>
                             <button class="add-to-cart" @click="toggleCart(product._id)">Add to Cart</button>
-                            <!-- <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">Buy now</router-link> -->
+                            <router-link class="buy-now" :to="{ name: 'product-detail', params: { id: product._id } }">See more</router-link>
                         </div>
                     </div>
                 </div>
@@ -191,13 +191,28 @@ export default {
     color: #fff;
     border: none;
     border-radius: 8px;
+    width: 120px;
     margin: 5px;
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.2s;
+    text-decoration: none;
+}
+.buy-now{
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    width: 120px;
+    margin: 5px;
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
 }
 
-.add-to-cart:hover{
+.add-to-cart:hover,
+.buy-now:hover{
     background-color: rgb(71, 69, 69);
 }
 </style>

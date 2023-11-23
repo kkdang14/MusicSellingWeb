@@ -159,6 +159,7 @@ export default {
 
 .nav-bar__item:hover {
     color: var(--black-hover);
+    cursor: pointer;
 }
 
 
@@ -182,7 +183,8 @@ export default {
 .favorite:hover,
 .cart:hover,
 .logout:hover,
-.login:hover {
+.login:hover,
+.profile:hover {
     color: var(--black-hover);
     font-weight: 600;
 }

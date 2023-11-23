@@ -4,7 +4,7 @@
             <h1>CART</h1>
             <div class="title">
                 <div class="check-all">
-                    <input class="checkbox" type="checkbox" name="" id="" />
+                    <input class="checkbox" type="checkbox" name="" id="" v-model="isCheckAll" @change="checkAllProducts"/>
                 </div>
                 <div class="product">Product</div>
                 <div class="unit-price">Unit price</div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <check-out :selectedProducts="selectedProducts" @checkout="proceedToCheckout"></check-out>
+        <check-out :selectedProducts="selectedProducts" @checkout="proceedToCheckout" @click="checkout"></check-out>
     </div>
 </template>
 
@@ -45,6 +45,9 @@
 import UserService from "../services/users.service";
 import ProductService from "../services/products.service";
 import CheckOut from "../components/CheckOut.vue"
+
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 export default {
     components: {
         CheckOut  
@@ -52,7 +55,8 @@ export default {
     data() {
         return {
             products: [],
-            isCheck: false,
+            isCheckAll: false,
+
         };
     },
     created() {
@@ -67,6 +71,24 @@ export default {
     },
 
     methods: {
+        checkout() {
+            const user = localStorage.getItem("user");
+            const userData = JSON.parse(user);
+            if (userData.cart.length === 0) {
+                toast.error('Can not order, because there are no products in cart', {
+                    autoClose: 800,
+                })
+            } else {
+                toast.success('Order Success', {
+                autoClose: 800,
+            })
+
+            setTimeout(() => {
+                this.$router.push({name: 'home'})
+            }, 1500);
+            }
+        },
+
         async retrieveCart() {
             try {
                 const user = localStorage.getItem("user");
@@ -153,6 +175,12 @@ export default {
         }, 
         calculatePrice(product) {
             return (product.price * product.quantity).toFixed(2)
+        },
+
+        checkAllProducts() {
+            this.products.forEach((product) => {
+                product.selected = this.isCheckAll;
+            });
         },
 
         async proceedToCheckout() {
